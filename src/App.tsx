@@ -1,6 +1,5 @@
 import * as React from "react";
-import { render } from "react-dom";
-import { BrowserRouter, Route, Link, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import PATH_NAME from "./Enum/PathEnum";
 import ProfileComponent from "./Componnets/Profile";
 
