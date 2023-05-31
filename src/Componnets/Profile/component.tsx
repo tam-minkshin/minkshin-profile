@@ -1,18 +1,26 @@
 import * as React from "react";
-import { Disclosure } from "@headlessui/react";
+import Input from "../../Core/Input";
 
 interface ProfileProps {}
 
-interface ProfileState {}
+interface ProfileState {
+  data: {
+    [name: string]: string;
+  };
+}
 
 class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
-  state = {};
+  state: ProfileState = {
+    data: {},
+  };
+  handleOnchange(name: string, value: string) {
+    this.state.data[name] = value;
+  }
   render() {
     return (
-      <Disclosure>
-        <Disclosure.Button className="py-2">Is team pricing available?</Disclosure.Button>
-        <Disclosure.Panel className="text-gray-500">Yes! You can purchase a license that you can share with your entire team.</Disclosure.Panel>
-      </Disclosure>
+      <form action="submit">
+        <Input label="Họ tên" onChange={this.handleOnchange} name="name" />
+      </form>
     );
   }
 }
