@@ -1,3 +1,9 @@
 .container {
-  @apply w-full;
+  @apply flex-col;
+  .label {
+    @apply text-xs items-end
+  }
+  .input {
+    @apply w-full rounded-md shadow-sm
+  }
 }

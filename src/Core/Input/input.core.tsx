@@ -9,8 +9,8 @@ const InputCore = (props: InputProps) => {
   const { label, value, onChange } = props;
   return (
     <div className='container'>
-      <label>{label}</label>
-      <input value={value} onChange={onChange}/>
+      <label className="label">{label}</label>
+      <input className="input" value={value} onChange={onChange}/>
     </div>
   );
 };
