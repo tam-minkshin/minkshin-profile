@@ -1,0 +1,14 @@
+@import "../variable";
+
+.container-input {
+  @apply max-w-full flex flex-col;
+  .label {
+    @apply text-base font-semibold items-end text-outline;
+  }
+  .input {
+    @apply w-full rounded-md border-2 border-outline px-2;
+  }
+  .input:focus {
+    @apply outline-none shadow-sm shadow-outline;
+  }
+}

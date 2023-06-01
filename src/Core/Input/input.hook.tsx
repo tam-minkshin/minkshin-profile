@@ -1,5 +1,5 @@
 import { ChangeEvent, FunctionComponent, useEffect, useState } from "react";
-import Input from "../Input/input.core";
+import Input from "Core/Input/input.core";
 
 interface InputHookProps {
   label: string;

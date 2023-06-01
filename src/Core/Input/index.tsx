@@ -1,2 +1,2 @@
-import InputHook from "../Input/input.hook";
-export default InputHook
+import Input from "Core/Input/input.hook";
+export default Input
