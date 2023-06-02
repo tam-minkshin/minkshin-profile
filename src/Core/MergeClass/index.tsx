@@ -1,6 +1,6 @@
 import Helper from "Service/Helper";
-const mergeClass = (className:string, classScss:string) => {
-  if (Helper.isEmpty(className)) {
+const mergeClass = (className:string | undefined, classScss:string) => {
+    if (Helper.isEmpty(className)) {
     return classScss;
   }
   const classes = className?.split(" ");

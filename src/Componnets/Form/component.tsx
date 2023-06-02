@@ -1,16 +1,14 @@
 import * as React from "react";
 import Input from "Core/Input";
 import Style from "Sass/Component/_form.module.scss";
+import { ProfileState } from "Componnets/Profile/component";
+import Button from "Core/Button";
 
 interface FormProps {
   handleData: (data: { [name: string]: string }) => void;
 }
 
-interface FormState {
-  data: {
-    [name: string]: string;
-  };
-}
+interface FormState extends ProfileState {}
 
 class FormComponent extends React.Component<FormProps, FormState> {
   state: FormState = {
@@ -20,7 +18,6 @@ class FormComponent extends React.Component<FormProps, FormState> {
     try {
       const { data } = this.state;
       data[name] = value;
-      console.debug("FormComponent execute handleOnchange", data);
       this.setState({ data });
     } catch (error: any) {
       console.error(`FormComponent execute handleOnchange ${error.toString()}`);
@@ -36,9 +33,10 @@ class FormComponent extends React.Component<FormProps, FormState> {
         <form action="submit">
           <Input label="Họ tên" onChange={this.handleOnchange.bind(this)} name="name" />
           <div className={Style["item--grid"]}>
-            <Input label="Email" onChange={this.handleOnchange.bind(this)} name="name" />
-            <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="name" />
+            <Input label="Email" onChange={this.handleOnchange.bind(this)} name="email" />
+            <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="phone" />
           </div>
+          <Button className="mt-1" content={"Lưu"} onClick={this.handleSubmit.bind(this)} />
         </form>
       </div>
     );

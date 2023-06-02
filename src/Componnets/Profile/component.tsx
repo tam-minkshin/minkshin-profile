@@ -1,11 +1,10 @@
 import * as React from "react";
 import FormComponent from "Componnets/Form/component";
+import Helper from "Service/Helper";
 
-interface ProfileProps {
-  
-}
+interface ProfileProps {}
 
-interface ProfileState {
+export interface ProfileState {
   data: {
     [name: string]: string;
   };
@@ -28,9 +27,24 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
     }
   }
   render() {
+    const { data } = this.state;
     return (
       <div className="border-2 border-outline px-48">
-        <FormComponent handleData={this.handleData.bind(this)}/>
+        {Helper.isEmpty(data) ? (
+          <FormComponent handleData={this.handleData.bind(this)} />
+        ) : (
+          <>
+            <p className="text-color-success">
+              Họ tên: <span className="text-white">{data.name ?? "-"}</span>
+            </p>
+            <p className="text-color-success">
+              Email: <span className="text-white">{data.email ?? "-"}</span>
+            </p>
+            <p className="text-color-success">
+              SĐT: <span className="text-white">{data.phone ?? "-"}</span>
+            </p>
+          </>
+        )}
       </div>
     );
   }

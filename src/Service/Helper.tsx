@@ -1,9 +1,13 @@
 class Helper {
   static isEmpty(value: any) {
-    if (value === "" || value.length === 0 || value === undefined) {
-      return true;
+    try {
+      if (value === "" || value.length === 0 || value === "undefined" || Object.entries(value).length === 0) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
     }
-    return false;
   }
 }
 export default Helper;
