@@ -1,8 +1,9 @@
 import * as React from "react";
-import Input from "Core/Input";
-import Grid from "Core/Grid";
+import FormComponent from "Componnets/Form/component";
 
-interface ProfileProps {}
+interface ProfileProps {
+  
+}
 
 interface ProfileState {
   data: {
@@ -12,14 +13,14 @@ interface ProfileState {
 
 class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
   state: ProfileState = {
-    data: {
-      name: "",
-    },
+    data: {},
   };
-  handleOnchange(name: string, value: string) {
+  handleData(dataProp: { [name: string]: string }) {
     try {
       const { data } = this.state;
-      data[name] = value;
+      for (const key in dataProp) {
+        data[key] = dataProp[key];
+      }
       console.debug("ProfileComponent execute handleOnchange", data);
       this.setState({ data });
     } catch (error: any) {
@@ -28,20 +29,8 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
   }
   render() {
     return (
-      <div className="px-7">
-        <form action="submit">
-          <Grid gap={2}>
-            <Grid item xs={12}>
-              <Input label="Họ tên" onChange={this.handleOnchange.bind(this)} name="name" />
-            </Grid>
-            <Grid item xs={6}>
-              <Input label="Email" onChange={this.handleOnchange.bind(this)} name="name" />
-            </Grid>
-            <Grid item xs={6}>
-              <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="name" />
-            </Grid>
-          </Grid>
-        </form>
+      <div className="border-2 border-outline px-48">
+        <FormComponent handleData={this.handleData.bind(this)}/>
       </div>
     );
   }
