@@ -1,6 +1,7 @@
 import * as React from "react";
 import FormComponent from "Componnets/Form/component";
 import Helper from "Service/Helper";
+import Style from "Sass/Component/_profile.module.scss"
 
 interface ProfileProps {}
 
@@ -29,7 +30,7 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
   render() {
     const { data } = this.state;
     return (
-      <div className="border-2 border-outline px-48">
+      <div className={Style['section']}>
         {Helper.isEmpty(data) ? (
           <FormComponent handleData={this.handleData.bind(this)} />
         ) : (
