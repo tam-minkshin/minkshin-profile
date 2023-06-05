@@ -8,12 +8,12 @@ export interface InputProps extends Omit<InputHookProps, "onChange"> {
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 const InputCore = (props: InputProps) => {
-  const { label, value, onChange, className = "", name } = props;
-  
+  const { label, value, onChange, className = "", name, type } = props;
+
   return (
-    <div className={mergeClass(className,Style["container-input"])}>
+    <div className={mergeClass(className, Style["container-input"])}>
       <label className={Style["label"]}>{label}</label>
-      {!Helper.isEmpty(value) ? <input name={name} className={Style["input"]} defaultValue={value} onChange={onChange} /> : <input name={name} className={Style["input"]} onChange={onChange} />}
+      {!Helper.isEmpty(value) ? <input type={type} name={name} className={Style["input"]} defaultValue={value} onChange={onChange} /> : <input type={type} name={name} className={Style["input"]} onChange={onChange} />}
     </div>
   );
 };

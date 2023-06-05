@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import Input from "Core/Input/input.core";
 
 export interface InputHookProps {
@@ -10,7 +10,7 @@ export interface InputHookProps {
   type?: string;
 }
 
-const InputHook: FunctionComponent<InputHookProps> = (props) => {
+const InputHook: FC<InputHookProps> = (props) => {
   const { label, defaultValue = "", name, onChange, className, type="text" } = props;
   const [value, setValue] = useState<string>("");
   useEffect(() => {
