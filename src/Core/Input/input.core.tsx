@@ -9,14 +9,7 @@ export interface InputProps extends Omit<InputHookProps, "onChange"> {
 }
 const InputCore = (props: InputProps) => {
   const { label, value, onChange, className = "", name } = props;
-  // const mergeClass = () => {
-  //   if (Helper.isEmpty(className)) {
-  //     return Style["container-input"];
-  //   }
-  //   const classes = className?.split(" ");
-  //   classes?.push(Style["container-input"]);
-  //   return classes?.join(" ");
-  // };
+  
   return (
     <div className={mergeClass(className,Style["container-input"])}>
       <label className={Style["label"]}>{label}</label>

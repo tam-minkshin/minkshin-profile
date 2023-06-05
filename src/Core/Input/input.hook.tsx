@@ -3,7 +3,7 @@ import Input from "Core/Input/input.core";
 
 export interface InputHookProps {
   label: string;
-  defaultValue?: string | undefined;
+  defaultValue?: string;
   name: string;
   onChange: (name: string, value: string) => void;
   className?: string;
