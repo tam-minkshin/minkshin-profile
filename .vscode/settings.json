@@ -1,0 +1,5 @@
+{
+    "scss.lint.emptyRules": "ignore",
+    "scss.lint.fontFaceProperties": "warning",
+    "scss.lint.unknownAtRules": "ignore"
+}

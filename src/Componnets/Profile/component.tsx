@@ -1,10 +1,11 @@
 import * as React from "react";
-import Input from "Core/Input";
-import Grid from "Core/Grid";
+import FormComponent from "Componnets/Form/component";
+import Helper from "Service/Helper";
+import Style from "Sass/Component/_profile.module.scss"
 
 interface ProfileProps {}
 
-interface ProfileState {
+export interface ProfileState {
   data: {
     [name: string]: string;
   };
@@ -12,14 +13,14 @@ interface ProfileState {
 
 class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
   state: ProfileState = {
-    data: {
-      name: "",
-    },
+    data: {},
   };
-  handleOnchange(name: string, value: string) {
+  handleData(dataProp: { [name: string]: string }) {
     try {
       const { data } = this.state;
-      data[name] = value;
+      for (const key in dataProp) {
+        data[key] = dataProp[key];
+      }
       console.debug("ProfileComponent execute handleOnchange", data);
       this.setState({ data });
     } catch (error: any) {
@@ -27,21 +28,24 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
     }
   }
   render() {
+    const { data } = this.state;
     return (
-      <div className="px-7">
-        <form action="submit">
-          <Grid gap={2}>
-            <Grid item xs={12}>
-              <Input label="Họ tên" onChange={this.handleOnchange.bind(this)} name="name" />
-            </Grid>
-            <Grid item xs={6}>
-              <Input label="Email" onChange={this.handleOnchange.bind(this)} name="name" />
-            </Grid>
-            <Grid item xs={6}>
-              <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="name" />
-            </Grid>
-          </Grid>
-        </form>
+      <div className={Style['section']}>
+        {Helper.isEmpty(data) ? (
+          <FormComponent handleData={this.handleData.bind(this)} />
+        ) : (
+          <>
+            <p className="text-color-success">
+              Họ tên: <span className="text-white">{data.name ?? "-"}</span>
+            </p>
+            <p className="text-color-success">
+              Email: <span className="text-white">{data.email ?? "-"}</span>
+            </p>
+            <p className="text-color-success">
+              SĐT: <span className="text-white">{data.phone ?? "-"}</span>
+            </p>
+          </>
+        )}
       </div>
     );
   }
