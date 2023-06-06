@@ -1,0 +1,40 @@
+@mixin pick-a-day {
+  @apply bg-outline text-dark;
+}
+@mixin content {
+  @apply w-8 h-16;
+}
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+.calendar-container {
+  @apply text-white w-full border-2;
+  .content-animation{
+    animation: fadeIn 0.7s;
+  }
+  table {
+    @apply w-full mx-auto;
+    .header-tb {
+      @apply border-b-2 text-outline font-semibold text-lg py-3;
+    }
+    th,
+    td {
+      @include content;
+      @apply text-center;
+    }
+    .day-allowed {
+      @apply border-2;
+    }
+    .day-picked,
+    .day-allowed:hover {
+      @include pick-a-day;
+    }
+    .day-not-allowed {
+      @apply cursor-not-allowed border-2 bg-gray-800;
+    }
+  }
+  .months-container{
+
+  }
+}

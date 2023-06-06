@@ -1,6 +1,6 @@
 import PATH_NAME from "Enum/PathEnum";
 import * as React from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import ProfileComponent from "./Profile";
 interface MainComponentProps {}
 

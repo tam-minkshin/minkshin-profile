@@ -2,7 +2,7 @@ import * as React from "react";
 import FormComponent from "Componnets/Form/component";
 import Helper from "Service/Helper";
 import Style from "Sass/Component/_profile.module.scss";
-import Calendar from "Core/DatePicker/Calendar";
+import Calendar from "Core/Calendar";
 
 interface ProfileProps {}
 
