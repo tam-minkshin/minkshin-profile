@@ -1,28 +1,48 @@
 import Grid from "Core/Grid";
 import Helper from "Service/Helper";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { VIEW_CALENDAR } from "./Calendar";
-
+import Style from "Sass/Core/_calendar.module.scss";
 interface YearsProps {
   handleChangeView: (view: number, data: number) => void;
+  minYear: number;
+  maxYear: number;
+  currentYear: number;
+  minDate?: number;
+  maxDate?: number;
 }
 
 const Years: FC<YearsProps> = (props) => {
-  const { handleChangeView } = props;
-  const minYear = 1900;
-  const maxYear = 2200;
+  const { handleChangeView, minYear, maxYear, currentYear, minDate = minYear, maxDate = maxYear } = props;
+  useEffect(() => {
+    document.getElementById(`${Style["currentYear"]}`)?.scrollIntoView(true);
+  }, []);
   const arrYear = Helper.renderArray(maxYear - minYear);
-  return (
-    <div className="max-h-96 overflow-y-scroll overflow-x-hidden">
-      <Grid>
-        {arrYear.map((item) => (
-          <Grid item xs={3}>
-            <div onClick={() => handleChangeView(VIEW_CALENDAR.MONTHS, minYear + item)} className="text-center cursor-pointer border-2 text-white hover:bg-outline hover:text-dark p-4">
-              {minYear + item}
-            </div>
-          </Grid>
-        ))}
+  const minDateTime = minDate === minYear ? minDate : new Date(minDate).getFullYear() ;
+  const maxDateTime = maxDate === maxYear ? maxDate : new Date(maxDate).getFullYear();
+
+  const handleRenderYear = (item: number, id: number) => {
+    const year = minYear + item;
+    if (minDateTime > year || maxDateTime < year) {
+      return (
+        <Grid key={id} item xs={3}>
+          <div id={year === currentYear ? `${Style["currentYear"]}` : "year"} className={Style["year-not-allowed"]}>
+            {year}
+          </div>
+        </Grid>
+      );
+    }
+    return (
+      <Grid key={id} item xs={3}>
+        <div id={year === currentYear ? `${Style["currentYear"]}` : "year"} onClick={() => handleChangeView(VIEW_CALENDAR.MONTHS, year)} className={Style["year-allowed"]}>
+          {year}
+        </div>
       </Grid>
+    );
+  };
+  return (
+    <div className={Style["years-container"]}>
+      <Grid>{arrYear.map((item, id) => handleRenderYear(item, id))}</Grid>
     </div>
   );
 };

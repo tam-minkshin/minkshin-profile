@@ -2,25 +2,41 @@ import Grid from "Core/Grid";
 import Helper from "Service/Helper";
 import { FC } from "react";
 import { VIEW_CALENDAR } from "./Calendar";
+import Style from "Sass/Core/_calendar.module.scss";
 
 interface MonthsProps {
   currentYear: number;
-  handleChangeView:(view:number,data:number)=>void
+  currentMonth: number;
+  handleChangeView: (view: number, data: number) => void;
+  minDate?: number;
+  maxDate?: number;
 }
 
 const Months: FC<MonthsProps> = (props) => {
-  const { currentYear, handleChangeView } = props;
+  const { currentYear, handleChangeView, currentMonth, minDate = new Date(`${currentYear}/${1}/${1}`).getTime(), maxDate = new Date(`${currentYear}/${12}/${31}`).getTime() } = props;
   const months = Helper.renderArray(12);
-  return (
-    <div>
-      <div onClick={()=>handleChangeView(VIEW_CALENDAR.YEARS,currentYear)} className="text-center text-outline font-semibold text-lg py-3 cursor-pointer">{currentYear}</div>
-      <Grid alignItems="center">
-        {months.map((item, id) => (
-          <Grid className="text-center cursor-pointer border-2 text-white hover:bg-outline hover:text-dark" key={id} item xs={4} >
-            <div onClick={()=>handleChangeView(VIEW_CALENDAR.DAYS,item)} className="p-4">{`Tháng ${item + 1}`}</div>
-          </Grid>
-        ))}
+  const handleRenderMonth = (item: number, id: number) => {
+    const monthMaxTime = new Date(`${currentYear}/${item + 1}/${1}`).getTime();
+    const monthMinTime = new Date(`${currentYear}/${item + 1}/${31}`).getTime();
+    if (minDate > monthMinTime || maxDate < monthMaxTime) {
+      return (
+        <Grid className={`${Style["month-not-allowed"]} ${item + 1 === currentMonth ? `${Style["month-picked"]}` : ""}`} key={id} item xs={4}>
+          <div>{`Tháng ${item + 1}`}</div>
+        </Grid>
+      );
+    }
+    return (
+      <Grid className={`${Style["month-allowed"]} ${item + 1 === currentMonth ? `${Style["month-picked"]}` : ""}`} key={id} item xs={4}>
+        <div onClick={() => handleChangeView(VIEW_CALENDAR.DAYS, item)}>{`Tháng ${item + 1}`}</div>
       </Grid>
+    );
+  };
+  return (
+    <div className={Style["months-container"]}>
+      <div onClick={() => handleChangeView(VIEW_CALENDAR.YEARS, currentYear)} className={Style["month-header"]}>
+        {currentYear}
+      </div>
+      <Grid alignItems="center">{months.map((item, id) => handleRenderMonth(item, id))}</Grid>
     </div>
   );
 };

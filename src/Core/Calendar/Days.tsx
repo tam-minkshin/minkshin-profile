@@ -10,18 +10,30 @@ interface DaysProps extends CalendarType {
   handleBackMonth: () => void;
   handleNextMonth: () => void;
   handlePickDate: (day: number) => void;
-  handleChangeView: (view: number,data:number) => void;
+  handleChangeView: (view: number, data: number) => void;
+  minDate?: number;
+  maxDate?: number;
+  maxYear: number;
 }
 
 const Days: FC<DaysProps> = (props) => {
-  const { currentMonth, currentYear, currentDay, handleNextMonth, handleBackMonth, handlePickDate, handleChangeView } = props;
+  const { currentMonth, currentYear, currentDay, handleNextMonth, handleBackMonth, handlePickDate, handleChangeView, minDate = 0, maxYear, maxDate = new Date(maxYear, 12, 31).getTime() } = props;
   const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
   const daysInPrevMonth = new Date(currentYear, currentMonth - 1, 0).getDate();
-  const handleChangeClassDay = (week: number, day: number, lastWeek: number) => {
-    if ((week === 0 && day > 7) || ((week + 1 === lastWeek || week + 1 === lastWeek - 1) && day < 14)) {
-      return Style["day-not-allowed"];
+  const handleRenderDay = (week: number, day: number, date: number, lastWeek: number) => {
+    const current = new Date(`${currentYear}/${currentMonth}/${day + 1}`).getTime();
+    if ((week === 0 && day > 7) || ((week + 1 === lastWeek || week + 1 === lastWeek - 1) && day < 14) || minDate > current || maxDate < current) {
+      return (
+        <td className={Style["day-not-allowed"]} key={`${week}${date}`}>
+          {day + 1}
+        </td>
+      );
     }
-    return day + 1 === currentDay ? mergeClass(Style["day-allowed"], Style["day-picked"]) : Style["day-allowed"];
+    return (
+      <td onClick={() => handlePickDate(day)} className={`${day + 1 === currentDay ? mergeClass(Style["day-allowed"], Style["day-picked"]) : Style["day-allowed"]}`} key={`${week}${date}`}>
+        {day + 1}
+      </td>
+    );
   };
 
   const handleFirstWeek = () => {
@@ -55,16 +67,7 @@ const Days: FC<DaysProps> = (props) => {
         week = [];
       }
     });
-
-    return days.map((tr, week) => (
-      <tr key={week}>
-        {tr.map((day, date) => (
-          <td onClick={() => handlePickDate(day)} className={handleChangeClassDay(week, day, days.length)} key={`${week}${date}`}>
-            {day + 1}
-          </td>
-        ))}
-      </tr>
-    ));
+    return days.map((tr, week) => <tr key={week}>{tr.map((day, date) => handleRenderDay(week, day, date, days.length))}</tr>);
   };
   return (
     <table>
@@ -74,7 +77,7 @@ const Days: FC<DaysProps> = (props) => {
             <Button content={"<"} onClick={handleBackMonth} />
           </Grid>
           <Grid item xs={6}>
-            <div className="cursor-pointer" onClick={() => handleChangeView(VIEW_CALENDAR.YEARS,currentDay)}>{`${currentMonth}/${currentYear}`}</div>
+            <div className="cursor-pointer" onClick={() => handleChangeView(VIEW_CALENDAR.YEARS, currentDay)}>{`${currentMonth}/${currentYear}`}</div>
           </Grid>
           <Grid item xs={3}>
             <Button content={">"} onClick={handleNextMonth} />

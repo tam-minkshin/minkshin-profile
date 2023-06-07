@@ -2,7 +2,6 @@ import * as React from "react";
 import FormComponent from "Componnets/Form/component";
 import Helper from "Service/Helper";
 import Style from "Sass/Component/_profile.module.scss";
-import Calendar from "Core/Calendar";
 
 interface ProfileProps {}
 
@@ -16,6 +15,7 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
   state: ProfileState = {
     data: {},
   };
+  
   handleData(dataProp: { [name: string]: string }) {
     try {
       const { data } = this.state;
@@ -49,9 +49,9 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
             </>
           )}
         </div>
-        <div className={Style["section"]}>
-          <Calendar />
-        </div>
+        {/* <div className={Style["section"]}>
+          <Calendar minDate={new Date("2020/5/10").getTime()} maxDate={new Date("2023/6/20").getTime()} minYear={1900} maxYear={2100} onPick={()=>{}}/>
+        </div> */}
       </>
     );
   }

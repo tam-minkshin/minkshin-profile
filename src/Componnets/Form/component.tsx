@@ -4,6 +4,7 @@ import Style from "Sass/Component/_form.module.scss";
 import { ProfileState } from "Componnets/Profile/component";
 import Button from "Core/Button";
 import Grid from "Core/Grid";
+import DatePicker from "Core/DatePicker";
 
 interface FormProps {
   handleData: (data: { [name: string]: string }) => void;
@@ -42,7 +43,7 @@ class FormComponent extends React.Component<FormProps, FormState> {
               <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="phone" />
             </Grid>
           </Grid>
-          <Input type="date" label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
+          <DatePicker label="Ngày sinh" onChange={()=>{}} name="dob" />
           <Button className="mt-1" content={"Lưu"} onClick={this.handleSubmit.bind(this)} />
         </form>
       </div>

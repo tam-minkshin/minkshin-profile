@@ -8,7 +8,14 @@ export const VIEW_CALENDAR = {
   MONTHS: 1,
   YEARS: 2,
 };
-interface CalendarProps {}
+interface CalendarProps {
+  minYear: number;
+  maxYear: number;
+  minDate?:number;
+  maxDate?:number;
+  // onPick:()=>void;
+  // defaultValue:number;
+}
 
 export interface CalendarType {
   currentMonth: number;
@@ -19,11 +26,11 @@ interface CalendarState extends CalendarType {
   view: number;
 }
 
-const Calendar: FC<CalendarProps> = () => {
+const Calendar: FC<CalendarProps> = (props) => {
   const current = new Date();
   const [state, setState] = useState<CalendarState>({ currentMonth: current.getMonth() + 1, currentYear: current.getFullYear(), currentDay: current.getDate(), view: VIEW_CALENDAR.DAYS });
   const { currentMonth, currentYear, currentDay } = state;
-
+  const { minYear, maxYear, minDate, maxDate} = props;
   const handleBackMonth = () => {
     if (state.currentMonth === 1) {
       state.currentMonth = 12;
@@ -63,17 +70,17 @@ const Calendar: FC<CalendarProps> = () => {
     <div className={Style["calendar-container"]}>
       {state.view === VIEW_CALENDAR.DAYS && (
         <div className={Style["content-animation"]}>
-          <Days currentDay={currentDay} currentYear={currentYear} currentMonth={currentMonth} handleBackMonth={handleBackMonth} handleNextMonth={handleNextMonth} handlePickDate={handlePickDate} handleChangeView={handleChangeView} />
+          <Days currentDay={currentDay} currentYear={currentYear} currentMonth={currentMonth} minDate={minDate} maxDate={maxDate} handleBackMonth={handleBackMonth} handleNextMonth={handleNextMonth} handlePickDate={handlePickDate} handleChangeView={handleChangeView} maxYear={maxYear}/>
         </div>
       )}
       {state.view === VIEW_CALENDAR.MONTHS && (
         <div className={Style["content-animation"]}>
-          <Months currentYear={currentYear} handleChangeView={handleChangeView} />
+          <Months currentYear={currentYear} currentMonth={currentMonth} minDate={minDate} maxDate={maxDate} handleChangeView={handleChangeView} />
         </div>
       )}
       {state.view === VIEW_CALENDAR.YEARS && (
         <div className={Style["content-animation"]}>
-          <Years handleChangeView={handleChangeView} />
+          <Years currentYear={currentYear} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} handleChangeView={handleChangeView} />
         </div>
       )}
     </div>
