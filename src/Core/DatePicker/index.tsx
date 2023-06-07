@@ -1,2 +1,2 @@
-import DatePicker from "./date-picker.hook";
+import DatePicker from "./date-picker.core";
 export default DatePicker

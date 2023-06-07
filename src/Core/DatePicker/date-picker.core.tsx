@@ -7,15 +7,15 @@ interface DatePickerCoreProps {
   label: string;
   name: string;
   onChange: (name: string, value: string) => void;
-  minYear: number;
-  maxYear: number;
-  minDate: number;
-  maxDate: number;
+  minYear?: number;
+  maxYear?: number;
+  minDate?: number;
+  maxDate?: number;
 }
 
-const DatePickerCore = (props:DatePickerCoreProps) => {
-  const { label, name, onChange, minDate, maxDate, minYear, maxYear } = props;
-  const [classes, setClass] = useState<string>("");
+const DatePickerCore = (props: DatePickerCoreProps) => {
+  const { label, name, onChange, minYear = 1900, maxYear = 2100, minDate = new Date(`${minYear}/${1}/${1}`).getTime(), maxDate = new Date(`${maxYear}/${12}/${31}`).getTime() } = props;
+  const [classes, setClass] = useState<string>(`${Style["calendar-pikcer-hidden"]}`);
   useEffect(() => {
     window.addEventListener("click", () => setClass(`${Style["calendar-pikcer-hidden"]}`), true);
   });
