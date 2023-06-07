@@ -13,7 +13,7 @@ interface CalendarProps {
   maxYear: number;
   minDate?:number;
   maxDate?:number;
-  // onPick:()=>void;
+  onPick:(value:string)=>void;
   // defaultValue:number;
 }
 
@@ -30,7 +30,7 @@ const Calendar: FC<CalendarProps> = (props) => {
   const current = new Date();
   const [state, setState] = useState<CalendarState>({ currentMonth: current.getMonth() + 1, currentYear: current.getFullYear(), currentDay: current.getDate(), view: VIEW_CALENDAR.DAYS });
   const { currentMonth, currentYear, currentDay } = state;
-  const { minYear, maxYear, minDate, maxDate} = props;
+  const { minYear, maxYear, minDate, maxDate, onPick} = props;
   const handleBackMonth = () => {
     if (state.currentMonth === 1) {
       state.currentMonth = 12;
@@ -54,6 +54,7 @@ const Calendar: FC<CalendarProps> = (props) => {
   const handlePickDate = (day: number) => {
     state.currentDay = day + 1;
     setState({ ...state });
+    onPick(`${currentYear}/${currentMonth}/${day + 1}`)
   };
   const handleChangeView = (view: number, data: number) => {
     switch (view) {

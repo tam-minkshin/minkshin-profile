@@ -16,9 +16,14 @@ interface DatePickerCoreProps {
 const DatePickerCore = (props: DatePickerCoreProps) => {
   const { label, name, onChange, minYear = 1900, maxYear = 2100, minDate = new Date(`${minYear}/${1}/${1}`).getTime(), maxDate = new Date(`${maxYear}/${12}/${31}`).getTime() } = props;
   const [classes, setClass] = useState<string>(`${Style["calendar-pikcer-hidden"]}`);
+
   useEffect(() => {
     window.addEventListener("click", () => setClass(`${Style["calendar-pikcer-hidden"]}`), true);
   });
+  const handleChangeDate = (value: string) => {
+    console.log("check date picker", value);
+    setClass(`${Style["calendar-pikcer-hidden"]}`);
+  };
   return (
     <div className={Style["date-picker-ctn"]}>
       <div
@@ -29,7 +34,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
       >
         <Input label={label} name={name} onChange={onChange} />
         <div className={classes}>
-          <Calendar minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} />
+          <Calendar minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />
         </div>
       </div>
     </div>
