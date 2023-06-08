@@ -26,7 +26,6 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
     return window.removeEventListener("click", () => setClass(`${Style["calendar-pikcer-hidden"]}`), true);
   });
   useEffect(()=>{
-    console.log(defaultValue)
     if(defaultValue){
       setValue(Helper.formatDate(defaultValue))
     }

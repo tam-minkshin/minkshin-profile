@@ -39,8 +39,10 @@ class FormComponent extends React.Component<FormProps, FormState> {
             <Grid item>
               <Input label="Email" onChange={this.handleOnchange.bind(this)} name="email" />
             </Grid>
+            <Grid item>
               <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="phone" />
             </Grid>
+          </Grid>
           <DatePicker defaultValue={new Date("1998/1/20").getTime()} label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
           <Button className="mt-1" content={"Lưu"} onClick={this.handleSubmit.bind(this)} />
         </form>
