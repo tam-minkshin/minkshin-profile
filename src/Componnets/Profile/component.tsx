@@ -7,7 +7,7 @@ interface ProfileProps {}
 
 export interface ProfileState {
   data: {
-    [name: string]: string;
+    [name: string]: string | number;
   };
 }
 
@@ -16,7 +16,7 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
     data: {},
   };
   
-  handleData(dataProp: { [name: string]: string }) {
+  handleData(dataProp: { [name: string]: string | number }) {
     try {
       const { data } = this.state;
       for (const key in dataProp) {

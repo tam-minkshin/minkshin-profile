@@ -5,7 +5,7 @@ export interface InputHookProps {
   label: string;
   defaultValue?: string;
   name: string;
-  onChange: (name: string, value: string) => void;
+  onChange: (name: string, value: string | number) => void;
   className?: string;
   type?: string;
 }

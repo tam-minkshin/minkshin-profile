@@ -1,12 +1,12 @@
 .date-picker-ctn{
     @apply w-full;
     .input-picker{
-        @apply relative
+        @apply relative z-0
     }
     .calendar-pikcer-hidden{
         @apply hidden
     }
     .calendar-pikcer{
-        @apply w-2/3 absolute pt-2
+        @apply w-2/3 absolute pt-2 z-10
     }
 } 

@@ -7,7 +7,7 @@ import Grid from "Core/Grid";
 import DatePicker from "Core/DatePicker";
 
 interface FormProps {
-  handleData: (data: { [name: string]: string }) => void;
+  handleData: (data: { [name: string]: string | number }) => void;
 }
 
 interface FormState extends ProfileState {}
@@ -16,7 +16,7 @@ class FormComponent extends React.Component<FormProps, FormState> {
   state: FormState = {
     data: {},
   };
-  handleOnchange(name: string, value: string) {
+  handleOnchange(name: string, value: string | number) {
     try {
       const { data } = this.state;
       data[name] = value;
@@ -43,7 +43,7 @@ class FormComponent extends React.Component<FormProps, FormState> {
               <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="phone" />
             </Grid>
           </Grid>
-          <DatePicker label="Ngày sinh" onChange={()=>{}} name="dob" />
+          <DatePicker label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
           <Button className="mt-1" content={"Lưu"} onClick={this.handleSubmit.bind(this)} />
         </form>
       </div>

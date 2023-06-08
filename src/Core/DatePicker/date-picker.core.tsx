@@ -1,12 +1,14 @@
 import Calendar from "Core/Calendar";
 import Input from "Core/Input";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import Style from "Sass/Core/_date-picker.module.scss";
+import StyleCalendar from "Sass/Core/_calendar.module.scss";
+import Helper from "Service/Helper";
 
 interface DatePickerCoreProps {
   label: string;
   name: string;
-  onChange: (name: string, value: string) => void;
+  onChange: (name: string, value: string | number) => void;
   minYear?: number;
   maxYear?: number;
   minDate?: number;
@@ -16,24 +18,29 @@ interface DatePickerCoreProps {
 const DatePickerCore = (props: DatePickerCoreProps) => {
   const { label, name, onChange, minYear = 1900, maxYear = 2100, minDate = new Date(`${minYear}/${1}/${1}`).getTime(), maxDate = new Date(`${maxYear}/${12}/${31}`).getTime() } = props;
   const [classes, setClass] = useState<string>(`${Style["calendar-pikcer-hidden"]}`);
-
+  const [value,setValue] = useState<string>(Helper.formatDate(Date.now()))
+  const test = useRef<HTMLDivElement>(null);
   useEffect(() => {
     window.addEventListener("click", () => setClass(`${Style["calendar-pikcer-hidden"]}`), true);
+    return window.removeEventListener("click", () => setClass(`${Style["calendar-pikcer-hidden"]}`), true);
   });
   const handleChangeDate = (value: string) => {
-    console.log("check date picker", value);
-    setClass(`${Style["calendar-pikcer-hidden"]}`);
+    setValue(Helper.formatDate(value))
+    onChange(name,new Date(value).getTime())
+  };
+  const handleClick = (e: MouseEvent) => {
+    if ((e.target as Element).className === StyleCalendar["day-allowed"]) {
+      setClass(`${Style["calendar-pikcer-hidden"]}`);
+      return
+    }
+    setClass(`${Style["calendar-pikcer"]}`);
   };
   return (
     <div className={Style["date-picker-ctn"]}>
-      <div
-        className={Style["input-picker"]}
-        onClick={() => {
-          setClass(`${Style["calendar-pikcer"]}`);
-        }}
-      >
-        <Input label={label} name={name} onChange={onChange} />
-        <div className={classes}>
+      <div className={Style["input-picker"]} onClick={handleClick}>
+        <Input defaultValue={value} label={label} name={name} onChange={onChange} />
+
+        <div className={classes} ref={test}>
           <Calendar minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />
         </div>
       </div>
