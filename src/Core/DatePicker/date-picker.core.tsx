@@ -44,7 +44,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
   return (
     <div className={Style["date-picker-ctn"]}>
       <div className={Style["input-picker"]} onClick={handleClick}>
-        <Input defaultValue={value} label={label} name={name} onChange={onChange} />
+        <Input type="Date" defaultValue={value} label={label} name={name} onChange={onChange} />
 
         <div className={classes} ref={test}>
           <Calendar defaultValue={defaultValue} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />

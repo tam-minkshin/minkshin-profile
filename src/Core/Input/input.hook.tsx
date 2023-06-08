@@ -8,10 +8,11 @@ export interface InputHookProps {
   onChange: (name: string, value: string | number) => void;
   className?: string;
   type?: string;
+  disabled?: boolean
 }
 
 const InputHook: FC<InputHookProps> = (props) => {
-  const { label, defaultValue = "", name, onChange, className, type="text" } = props;
+  const { label, defaultValue = "", name, onChange, className, type="text", disabled=false } = props;
   const [value, setValue] = useState<string>("");
   useEffect(() => {
     setValue(defaultValue);
@@ -20,7 +21,7 @@ const InputHook: FC<InputHookProps> = (props) => {
     setValue(event.target.value);
     onChange(name, event.target.value);
   };
-  return <Input type={type} name={name} className={className} label={label} value={value} onChange={handleChange} />;
+  return <Input disabled={disabled} type={type} name={name} className={className} label={label} value={value} onChange={handleChange} />;
 };
 
 export default InputHook;
