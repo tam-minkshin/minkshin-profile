@@ -23,12 +23,12 @@ const Grid = (props: GridProps) => {
       <GridStyle $gap={gap} $alignItems={alignItems}>
         {Array.isArray(children) ? (
           children.map((ele, id) => (
-            <GridItem key={id} $xs={ele.props.xs} $gap={gap / children.length}>
+            <GridItem key={id} $xs={ele.props.xs ?? 6} $gap={gap / children.length}>
               {ele.props.children}
             </GridItem>
           ))
         ) : (
-          children.props.item && <GridItem $xs={children.props.xs} $gap={0}>
+          children.props.item && <GridItem $xs={children.props.xs ?? 6} $gap={0}>
             {children.props.children}
           </GridItem>
         )}
