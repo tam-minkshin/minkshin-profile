@@ -17,18 +17,22 @@ const GridItem = styled.div<{ $xs: number; $gap: number }>`
   flex-basis: calc(${(props) => (100 / 12) * props.$xs}% - ${(props) => props.$gap}rem);
 `;
 const Grid = (props: GridProps) => {
-  const { item = false, children, xs = 6, gap = 0, alignItems = "normal", className } = props;
+  const { children, xs = 6, gap = 0, alignItems = "normal" } = props;
   return (
     <>
-      {Array.isArray(children) && (
-        <GridStyle $gap={gap} $alignItems={alignItems}>
-          {children.map((ele,id) => (
-            <GridItem key={id} $xs={xs} $gap={gap/children.length}>
+      <GridStyle $gap={gap} $alignItems={alignItems}>
+        {Array.isArray(children) ? (
+          children.map((ele, id) => (
+            <GridItem key={id} $xs={xs} $gap={gap / children.length}>
               {ele.props.children}
             </GridItem>
-          ))}
-        </GridStyle>
-      )}
+          ))
+        ) : (
+          children.props.item && <GridItem $xs={xs} $gap={0}>
+            {children.props.children}
+          </GridItem>
+        )}
+      </GridStyle>
     </>
   );
 };
