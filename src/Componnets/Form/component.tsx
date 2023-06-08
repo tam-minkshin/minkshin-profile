@@ -20,7 +20,7 @@ class FormComponent extends React.Component<FormProps, FormState> {
     try {
       const { data } = this.state;
       data[name] = value;
-      console.debug('FormComponent execute handleOnchange',data)
+      console.debug("FormComponent execute handleOnchange", data);
       this.setState({ data });
     } catch (error: any) {
       console.error(`FormComponent execute handleOnchange ${error.toString()}`);
@@ -39,11 +39,9 @@ class FormComponent extends React.Component<FormProps, FormState> {
             <Grid item>
               <Input label="Email" onChange={this.handleOnchange.bind(this)} name="email" />
             </Grid>
-            <Grid item>
               <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="phone" />
             </Grid>
-          </Grid>
-          <DatePicker label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
+          <DatePicker defaultValue={new Date("1998/1/20").getTime()} label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
           <Button className="mt-1" content={"Lưu"} onClick={this.handleSubmit.bind(this)} />
         </form>
       </div>

@@ -37,7 +37,7 @@ const Days: FC<DaysProps> = (props) => {
   };
 
   const handleFirstWeek = () => {
-    const firstDay: number = new Date(`${currentYear}-${currentMonth}-1`).getDay();
+    const firstDay: number = new Date(`${currentYear}/${currentMonth}/1`).getDay();
     switch (firstDay) {
       case 0:
         return Helper.renderArray(daysInPrevMonth).slice(daysInPrevMonth - (firstDay + 2));
@@ -46,7 +46,7 @@ const Days: FC<DaysProps> = (props) => {
     }
   };
   const handleLastWeek = () => {
-    const lastDay: number = new Date(`${currentYear}-${currentMonth}-${daysInMonth}`).getDay();
+    const lastDay: number = new Date(`${currentYear}/${currentMonth}/${daysInMonth}`).getDay();
     switch (lastDay) {
       case 0:
       case 1:

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Style from "Sass/Core/_calendar.module.scss";
 import Days from "./Days";
 import Months from "./Months";
@@ -11,10 +11,10 @@ export const VIEW_CALENDAR = {
 interface CalendarProps {
   minYear: number;
   maxYear: number;
-  minDate?:number;
-  maxDate?:number;
-  onPick:(value:string)=>void;
-  // defaultValue:number;
+  minDate?: number;
+  maxDate?: number;
+  onPick: (value: string) => void;
+  defaultValue?: number;
 }
 
 export interface CalendarType {
@@ -30,7 +30,15 @@ const Calendar: FC<CalendarProps> = (props) => {
   const current = new Date();
   const [state, setState] = useState<CalendarState>({ currentMonth: current.getMonth() + 1, currentYear: current.getFullYear(), currentDay: current.getDate(), view: VIEW_CALENDAR.DAYS });
   const { currentMonth, currentYear, currentDay } = state;
-  const { minYear, maxYear, minDate, maxDate, onPick} = props;
+  const { minYear, maxYear, minDate, maxDate, onPick, defaultValue } = props;
+  useEffect(() => {
+    if (defaultValue) {
+      const time = new Date(defaultValue);
+      state.currentDay = time.getDate();
+      state.currentMonth = time.getMonth()+1;
+      state.currentYear = time.getFullYear();
+    }
+  }, [defaultValue]);
   const handleBackMonth = () => {
     if (state.currentMonth === 1) {
       state.currentMonth = 12;
@@ -54,7 +62,7 @@ const Calendar: FC<CalendarProps> = (props) => {
   const handlePickDate = (day: number) => {
     state.currentDay = day + 1;
     setState({ ...state });
-    onPick(`${currentYear}/${currentMonth}/${day + 1}`)
+    onPick(`${currentYear}/${currentMonth}/${day + 1}`);
   };
   const handleChangeView = (view: number, data: number) => {
     switch (view) {
@@ -71,7 +79,7 @@ const Calendar: FC<CalendarProps> = (props) => {
     <div className={Style["calendar-container"]}>
       {state.view === VIEW_CALENDAR.DAYS && (
         <div className={Style["content-animation"]}>
-          <Days currentDay={currentDay} currentYear={currentYear} currentMonth={currentMonth} minDate={minDate} maxDate={maxDate} handleBackMonth={handleBackMonth} handleNextMonth={handleNextMonth} handlePickDate={handlePickDate} handleChangeView={handleChangeView} maxYear={maxYear}/>
+          <Days currentDay={currentDay} currentYear={currentYear} currentMonth={currentMonth} minDate={minDate} maxDate={maxDate} handleBackMonth={handleBackMonth} handleNextMonth={handleNextMonth} handlePickDate={handlePickDate} handleChangeView={handleChangeView} maxYear={maxYear} />
         </div>
       )}
       {state.view === VIEW_CALENDAR.MONTHS && (

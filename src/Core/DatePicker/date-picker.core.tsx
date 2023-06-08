@@ -13,10 +13,11 @@ interface DatePickerCoreProps {
   maxYear?: number;
   minDate?: number;
   maxDate?: number;
+  defaultValue?:number;
 }
 
 const DatePickerCore = (props: DatePickerCoreProps) => {
-  const { label, name, onChange, minYear = 1900, maxYear = 2100, minDate = new Date(`${minYear}/${1}/${1}`).getTime(), maxDate = new Date(`${maxYear}/${12}/${31}`).getTime() } = props;
+  const { label, name, onChange, minYear = 1900, maxYear = 2100, minDate = new Date(`${minYear}/${1}/${1}`).getTime(), maxDate = new Date(`${maxYear}/${12}/${31}`).getTime(), defaultValue } = props;
   const [classes, setClass] = useState<string>(`${Style["calendar-pikcer-hidden"]}`);
   const [value,setValue] = useState<string>(Helper.formatDate(Date.now()))
   const test = useRef<HTMLDivElement>(null);
@@ -24,6 +25,12 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
     window.addEventListener("click", () => setClass(`${Style["calendar-pikcer-hidden"]}`), true);
     return window.removeEventListener("click", () => setClass(`${Style["calendar-pikcer-hidden"]}`), true);
   });
+  useEffect(()=>{
+    console.log(defaultValue)
+    if(defaultValue){
+      setValue(Helper.formatDate(defaultValue))
+    }
+  },[defaultValue])
   const handleChangeDate = (value: string) => {
     setValue(Helper.formatDate(value))
     onChange(name,new Date(value).getTime())
@@ -41,7 +48,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
         <Input defaultValue={value} label={label} name={name} onChange={onChange} />
 
         <div className={classes} ref={test}>
-          <Calendar minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />
+          <Calendar defaultValue={defaultValue} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />
         </div>
       </div>
     </div>
