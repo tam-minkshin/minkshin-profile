@@ -4,6 +4,7 @@ import Helper from "Service/Helper";
 import Style from "Sass/Component/_profile.module.scss";
 import Dialog from "Core/Dialog";
 import UpdateProfileComponent from "Componnets/UpdateForm";
+import TranferList from "Core/TranferList";
 
 interface ProfileProps {}
 
@@ -74,6 +75,9 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
               </div>
             </>
           )}
+        </div>
+        <div className={Style["section"]}>
+          <TranferList/>
         </div>
       </>
     );
