@@ -1,0 +1,21 @@
+.background-padding {
+  @apply w-screen h-screen bg-black absolute z-40 top-0 left-0 opacity-75;
+}
+.container-padding {
+  @apply w-screen h-screen bg-transparent absolute z-50 top-0 left-0;
+  .content-box {
+    @apply flex h-full justify-center items-center;
+    .content-dialog {
+      @apply w-fit border-2 rounded p-9 bg-dark opacity-100;
+      .header-dialog {
+        @apply flex justify-between flex-row;
+        .title-dialog {
+          @apply text-outline font-bold text-2xl;
+        }
+        .close-btn {
+          @apply w-9 h-9 flex items-center justify-center text-red-500 border-2 border-red-500 rounded font-bold cursor-pointer hover:text-black hover:bg-red-500;
+        }
+      }
+    }
+  }
+}

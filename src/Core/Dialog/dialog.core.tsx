@@ -1,30 +1,33 @@
 import Button from "Core/Button";
-import Input from "Core/Input";
-import React, { FC, useEffect, useState } from "react";
-
+import { FC, useEffect, useState } from "react";
+import Style from "Sass/Core/_dialog.module.scss";
 interface DialogProps {
   content: JSX.Element;
   isShowDialog: boolean;
-  handleShow:()=>void;
-  title:string;
-  contentBtn:string;
+  title: string;
+  contentBtn: string;
+  handleShow:()=>void
 }
 
 const Dialog: FC<DialogProps> = (props) => {
-  const { content, isShowDialog, handleShow, title, contentBtn } = props;
+  const { content, isShowDialog, title, contentBtn, handleShow } = props;
   const [isShow, setShow] = useState<boolean>(false);
   useEffect(() => {
     setShow(isShowDialog);
-  }, [isShowDialog]);
+  },[isShowDialog]);
+
   return (
     <>
       {isShow && (
         <>
-          <div className="w-screen h-screen bg-black absolute z-40 top-0 left-0 opacity-75"></div>
-          <div className="w-screen h-screen bg-transparent absolute z-50 top-0 left-0">
-            <div className="flex h-full justify-center items-center">
-              <div className="w-1/2 border-2 p-7 bg-dark opacity-100">
-                <h1 className="text-white">{title}</h1>
+          <div className={Style["background-padding"]}></div>
+          <div className={Style["container-padding"]}>
+            <div className={Style["content-box"]}>
+              <div className={Style["content-dialog"]}>
+                <div className={Style["header-dialog"]}>
+                  <h1 className={Style['title-dialog']}>{title}</h1>
+                  <div className={Style['close-btn']} onClick={handleShow}><span>X</span></div>
+                </div>
                 <div className="w-full flex flex-row my-7">
                   <div className="bg-gradient-to-l from-outline h-1 basis-1/2"></div>
                   <div className="bg-gradient-to-r from-outline h-1 basis-1/2"></div>

@@ -2,7 +2,7 @@ import * as React from "react";
 import FormComponent from "Componnets/Form/component";
 import Helper from "Service/Helper";
 import Style from "Sass/Component/_profile.module.scss";
-import Dialog from "Core/Dialog/dialog.core";
+import Dialog from "Core/Dialog";
 import UpdateProfileComponent from "Componnets/UpdateForm";
 
 interface ProfileProps {}
@@ -19,7 +19,7 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
     data: {},
     isShow: false,
   };
-  
+
   handleData(dataProp: { [name: string]: string | number }) {
     try {
       const { data } = this.state;
@@ -34,17 +34,20 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
       console.error(`ProfileComponent execute handleOnchange ${error.toString()}`);
     }
   }
+  handleShow() {
+    let { isShow } = this.state;
+    isShow = !isShow;
+    this.setState({ isShow });
+  }
   handleConfirm(dataProp: { [name: string]: string | number }) {
-    let { data, isShow } = this.state;
+    let { data } = this.state;
     for (const key in dataProp) {
       data[key] = dataProp[key];
     }
-    isShow = false;
-    this.setState({ data, isShow });
+    this.handleShow();
+    this.setState({ data });
   }
-  handleShow() {
-    this.setState({ isShow: true });
-  }
+
   render() {
     const { data, isShow } = this.state;
     return (
@@ -66,7 +69,9 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
               <p className="text-color-success">
                 Ngày sinh: <span className="text-white">{data.dob ? Helper.formatDate(data.dob) : "-"}</span>
               </p>
-              <Dialog contentBtn="Cập nhật" title="Update Form" handleShow={this.handleShow.bind(this)} isShowDialog={isShow} content={<UpdateProfileComponent handleConfirm={this.handleConfirm.bind(this)} defaultData={data} />} />
+              <div className="mt-2">
+                <Dialog handleShow={this.handleShow.bind(this)} contentBtn="Cập nhật" title="Update Form" isShowDialog={isShow} content={<UpdateProfileComponent handleConfirm={this.handleConfirm.bind(this)} defaultData={data} />} />
+              </div>
             </>
           )}
         </div>

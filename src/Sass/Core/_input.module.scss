@@ -1,5 +1,5 @@
 .container-input {
-  @apply max-w-full flex flex-col;
+  @apply max-w-full flex flex-col my-1;
   .label {
     @apply text-base font-semibold items-end text-outline;
   }

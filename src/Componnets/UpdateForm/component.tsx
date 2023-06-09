@@ -1,7 +1,5 @@
 import * as React from "react";
 import Input from "Core/Input";
-import Style from "Sass/Component/_form.module.scss";
-import { ProfileState } from "Componnets/Profile/component";
 import Button from "Core/Button";
 import Grid from "Core/Grid";
 import DatePicker from "Core/DatePicker";
@@ -36,20 +34,22 @@ class UpdateFormComponent extends React.Component<FormProps, FormState> {
   }
   render() {
     return (
-      <div className={Style["form--container"]}>
+      <div>
         <form action="submit">
           <Input label="Họ tên" onChange={this.handleOnchange.bind(this)} name="name" defaultValue={this.props.defaultData.name ?? ""} />
           <Grid gap={1}>
             <Grid item>
-              <Input label="Email" onChange={this.handleOnchange.bind(this)} name="email" defaultValue={this.props.defaultData.email ?? ""} />
+              <Input type="email" label="Email" onChange={this.handleOnchange.bind(this)} name="email" defaultValue={this.props.defaultData.email ?? ""} />
             </Grid>
             <Grid item>
-              <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="phone" defaultValue={this.props.defaultData.email ?? ""} />
+              <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="phone" defaultValue={this.props.defaultData.phone ?? ""} />
             </Grid>
           </Grid>
           <DatePicker defaultValue={new Date(this.props.defaultData.dob).getTime()} label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
         </form>
-        <Button content="Confirm" onClick={this.handleConfirm.bind(this)} />
+        <div className="flex justify-end">
+          <Button className="mt-2" content="Confirm" onClick={this.handleConfirm.bind(this)} />
+        </div>
       </div>
     );
   }
