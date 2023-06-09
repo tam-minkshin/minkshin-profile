@@ -13,7 +13,7 @@ interface DatePickerCoreProps {
   maxYear?: number;
   minDate?: number;
   maxDate?: number;
-  defaultValue?:number;
+  defaultValue?:number | undefined;
 }
 
 const DatePickerCore = (props: DatePickerCoreProps) => {

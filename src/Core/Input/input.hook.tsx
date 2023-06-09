@@ -3,7 +3,7 @@ import Input from "Core/Input/input.core";
 
 export interface InputHookProps {
   label: string;
-  defaultValue?: string;
+  defaultValue?: string | number;
   name: string;
   onChange: (name: string, value: string | number) => void;
   className?: string;
@@ -13,7 +13,7 @@ export interface InputHookProps {
 
 const InputHook: FC<InputHookProps> = (props) => {
   const { label, defaultValue = "", name, onChange, className, type="text", disabled=false } = props;
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string | number>("");
   useEffect(() => {
     setValue(defaultValue);
   }, [defaultValue]);

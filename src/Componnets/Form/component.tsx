@@ -10,12 +10,19 @@ interface FormProps {
   handleData: (data: { [name: string]: string | number }) => void;
 }
 
-interface FormState extends ProfileState {}
+interface FormState {
+  data: {
+    [name: string]: string | number ;
+  };
+}
 
 class FormComponent extends React.Component<FormProps, FormState> {
   state: FormState = {
-    data: {},
+    data: {
+      dob:new Date("1998/1/20").getTime()
+    },
   };
+  
   handleOnchange(name: string, value: string | number) {
     try {
       const { data } = this.state;
@@ -43,7 +50,7 @@ class FormComponent extends React.Component<FormProps, FormState> {
               <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="phone" />
             </Grid>
           </Grid>
-          <DatePicker defaultValue={new Date("1998/1/20").getTime()} label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
+          <DatePicker defaultValue={Number(this.state.data.dob)} label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
           <Button className="mt-1" content={"Lưu"} onClick={this.handleSubmit.bind(this)} />
         </form>
       </div>

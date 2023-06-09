@@ -4,7 +4,7 @@ import Helper from "Service/Helper";
 import { InputHookProps } from "./input.hook";
 import mergeClass from "Core/MergeClass";
 export interface InputProps extends Omit<InputHookProps, "onChange"> {
-  value: string;
+  value: string | number;
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 const InputCore = (props: InputProps) => {
