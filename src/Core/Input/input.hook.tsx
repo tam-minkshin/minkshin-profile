@@ -3,17 +3,17 @@ import Input from "Core/Input/input.core";
 
 export interface InputHookProps {
   label: string;
-  defaultValue?: string | number;
+  defaultValue?: string;
   name: string;
-  onChange: (name: string, value: string | number) => void;
+  onChange: (name: string, value: string) => void;
   className?: string;
   type?: string;
-  disabled?: boolean
+  disabled?: boolean;
 }
 
 const InputHook: FC<InputHookProps> = (props) => {
   const { label, defaultValue = "", name, onChange, className, type="text", disabled=false } = props;
-  const [value, setValue] = useState<string | number>("");
+  const [value, setValue] = useState<string>("");
   useEffect(() => {
     setValue(defaultValue);
   }, [defaultValue]);

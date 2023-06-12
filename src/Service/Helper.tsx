@@ -1,7 +1,7 @@
 class Helper {
   static isEmpty(value: any) {
     try {
-      if (value === "" || value === "undefined" || Object.entries(value).length === 0) {
+      if (value === "" || value === "undefined" || Object.entries(value).length === 0 || value.length === 0) {
         return true;
       }
       return false;

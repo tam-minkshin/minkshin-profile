@@ -1,2 +1,2 @@
-import TranferList from "./tranfer.core";
+import TranferList from "./tranfer.hook";
 export default TranferList

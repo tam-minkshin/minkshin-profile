@@ -1,0 +1,33 @@
+.container-tranfer {
+  @apply flex flex-row text-light text-center p-4 border justify-center;
+  .content-tranfer {
+    @apply flex flex-col items-center basis-52 border border-outline;
+    .search-item {
+      @apply px-1 text-dark;
+    }
+    .container-item {
+        @apply h-full flex items-center;
+      .items-tranfer--box {
+        @apply h-fit w-fit;
+        .item-tranfer {
+          @apply m-3 flex;
+          .tranfer-item--input {
+            @apply mr-2;
+          }
+          .tranfer-item--label {
+            @apply leading-5;
+          }
+        }
+      }
+    }
+  }
+  .container-btns {
+    @apply flex flex-col justify-evenly mx-3;
+    button {
+      @apply bg-outline text-dark m-1 py-1 px-4 rounded;
+    }
+    button:disabled {
+      @apply bg-gray-500 text-dark m-1 py-1 px-4 rounded cursor-not-allowed;
+    }
+  }
+}
