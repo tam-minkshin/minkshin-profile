@@ -3,7 +3,7 @@
   .input-picker {
     @apply relative z-0;
     .input-datepicker:disabled {
-      @apply w-full rounded-md border-2 border-outline px-2 bg-white;
+      @apply w-full rounded-md border-2 border-outline px-2 bg-white text-dark;
     }
   }
   .calendar-pikcer-hidden {
