@@ -14,9 +14,9 @@ const InputCore = (props: InputProps) => {
     <div className={mergeClass(className, Style["container-input"])}>
       <label className={Style["label"]}>{label}</label>
       {!Helper.isEmpty(value) ? (
-        <input disabled={type === "Date" ? true : disabled} type={type === "Date" ? "text" : type} name={name} className={type === "Date" ? Style["input-datepicker"] : Style["input"]} defaultValue={value} onChange={onChange} />
+        <input type={type} name={name} className={Style["input"]} defaultValue={value} onChange={onChange} />
       ) : (
-        <input disabled={type === "Date" ? true : disabled} type={type === "Date" ? "text" : type} name={name} className={type === "Date" ? Style["input-datepicker"] : Style["input"]} onChange={onChange} />
+        <input type={type} name={name} className={Style["input"]} onChange={onChange} />
       )}
     </div>
   );

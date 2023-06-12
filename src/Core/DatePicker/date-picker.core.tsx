@@ -8,7 +8,7 @@ import Helper from "Service/Helper";
 interface DatePickerCoreProps {
   label: string;
   name: string;
-  onChange: (name: string, value:number) => void;
+  onChange: (name: string, value: number) => void;
   minYear?: number;
   maxYear?: number;
   minDate?: number;
@@ -44,8 +44,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
   return (
     <div className={Style["date-picker-ctn"]}>
       <div className={Style["input-picker"]} onClick={handleClick}>
-        <input type="Date" defaultValue={value} name={name} />
-
+        <input className={Style["input-datepicker"]} type="text" defaultValue={value} name={name} />
         <div className={classes} ref={test}>
           <Calendar defaultValue={defaultValue} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />
         </div>

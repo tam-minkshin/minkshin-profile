@@ -1,12 +1,15 @@
-.date-picker-ctn{
-    @apply w-full;
-    .input-picker{
-        @apply relative z-0
+.date-picker-ctn {
+  @apply w-full;
+  .input-picker {
+    @apply relative z-0;
+    .input-datepicker:disabled {
+      @apply w-full rounded-md border-2 border-outline px-2 bg-white;
     }
-    .calendar-pikcer-hidden{
-        @apply hidden
-    }
-    .calendar-pikcer{
-        @apply w-2/3 absolute pt-2 z-10
-    }
-} 
+  }
+  .calendar-pikcer-hidden {
+    @apply hidden;
+  }
+  .calendar-pikcer {
+    @apply w-2/3 absolute pt-2 z-10;
+  }
+}
