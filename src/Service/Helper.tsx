@@ -15,7 +15,7 @@ class Helper {
   static formatDate(value:string | number){
     try {
       const time = new Date(value)
-      return `${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()}`
+      return `${(`${time.getDate()}`).length < 2 ? `0${time.getDate()}` : `${time.getDate()}`}/${(`${time.getMonth()}`).length < 2 ? `0${time.getMonth()+1}` : `${time.getMonth()+1}`}/${time.getFullYear()}`
     } catch (error) {
       throw `invalid value ${value}`
     }

@@ -5,7 +5,7 @@
     .label {
       @apply text-base font-semibold items-end text-outline;
     }
-    .input-datepicker:disabled {
+    .input-datepicker {
       @apply w-full rounded-md border-2 border-outline px-2 bg-white text-dark;
     }
   }
