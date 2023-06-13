@@ -108,8 +108,6 @@ const TranferHook: FC<TranferHookProps> = (props) => {
         });
         state.rightList = Helper.isEmpty(temp) ? [] : temp;
         break;
-      default:
-        throw `invalid name search TranferList ${name}`;
     }
     setState({ ...state });
   };

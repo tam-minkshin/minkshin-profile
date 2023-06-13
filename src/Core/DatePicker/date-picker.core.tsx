@@ -17,11 +17,10 @@ interface DatePickerCoreProps {
 interface DatePickerCoreStates {
   value: string;
   classes: string;
-  position: string;
 }
 const DatePickerCore = (props: DatePickerCoreProps) => {
   const { label, name, onChange, minYear = 1900, maxYear = 2100, minDate = new Date(`${minYear}/${1}/${1}`).getTime(), maxDate = new Date(`${maxYear}/${12}/${31}`).getTime(), defaultValue } = props;
-  const [state, setState] = useState<DatePickerCoreStates>({ value: "", classes: `${Style["calendar-pikcer-hidden"]}`, position: "bottom" });
+  const [state, setState] = useState<DatePickerCoreStates>({ value: "", classes: `${Style["calendar-pikcer-hidden"]}` });
   const inputRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (defaultValue) {
