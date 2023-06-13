@@ -87,7 +87,7 @@ const TranferHook: FC<TranferHookProps> = (props) => {
           return;
         }
         state.dataLeft.map((item) => {
-          if (item.label.search(value) !== -1) {
+          if (item.label.toUpperCase().search(value.toUpperCase()) !== -1) {
             temp.push(item);
           }
         });
@@ -100,7 +100,7 @@ const TranferHook: FC<TranferHookProps> = (props) => {
           return;
         }
         state.dataRight.map((item) => {
-          if (item.label.search(value) !== -1) {
+          if (item.label.toUpperCase().search(value.toUpperCase()) !== -1) {
             temp.push(item);
           }
         });
