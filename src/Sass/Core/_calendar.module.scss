@@ -2,7 +2,7 @@
   @apply bg-outline text-dark;
 }
 @mixin content {
-  @apply w-8 h-16;
+  @apply w-10 h-10;
 }
 @mixin not-allowed {
   @apply cursor-not-allowed border-2 bg-gray-800 text-white text-center;
@@ -59,7 +59,7 @@
   }
 }
 .years-container {
-  @apply max-h-96 overflow-y-scroll overflow-x-hidden;
+  @apply max-h-72 overflow-y-scroll overflow-x-hidden;
 
   .year-allowed {
     @apply text-center py-2 cursor-pointer border-2 text-white;

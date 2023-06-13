@@ -90,6 +90,7 @@ const TranferHook: FC<TranferHookProps> = (props) => {
           if (item.label.toUpperCase().search(value.toUpperCase()) !== -1) {
             temp.push(item);
           }
+          return temp
         });
         state.leftList = Helper.isEmpty(temp) ? [] : temp;
         break;
@@ -103,6 +104,7 @@ const TranferHook: FC<TranferHookProps> = (props) => {
           if (item.label.toUpperCase().search(value.toUpperCase()) !== -1) {
             temp.push(item);
           }
+          return temp
         });
         state.rightList = Helper.isEmpty(temp) ? [] : temp;
         break;

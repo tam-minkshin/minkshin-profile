@@ -12,7 +12,12 @@
   .calendar-pikcer-hidden {
     @apply hidden;
   }
-  .calendar-pikcer {
-    @apply w-2/3 absolute pt-2 z-10;
+  .calendar-pikcer-top {
+    @apply absolute z-10 right-0;
+    bottom: 35px;
+  }
+  .calendar-pikcer-bottom {
+    @apply absolute z-10;
+    top: 55px;
   }
 }
