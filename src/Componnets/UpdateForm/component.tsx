@@ -43,6 +43,7 @@ class UpdateFormComponent extends React.Component<FormProps, FormState> {
     this.props.handleConfirm(this.state.data);
   }
   render() {
+    console.log('new Date(this.props.defaultData.dob).getTime()',this.props.defaultData.dob)
     return (
       <div>
         <form action="submit">
@@ -55,7 +56,7 @@ class UpdateFormComponent extends React.Component<FormProps, FormState> {
               <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="phone" defaultValue={this.props.defaultData.phone ?? ""} />
             </Grid>
           </Grid>
-          <DatePicker defaultValue={new Date(this.props.defaultData.dob).getTime()} label="Ngày sinh" onChange={this.handleOnchangeDate.bind(this)} name="dob" />
+          <DatePicker defaultValue={Number(this.props.defaultData.dob)} label="Ngày sinh" onChange={this.handleOnchangeDate.bind(this)} name="dob" />
         </form>
         <div className="flex justify-end">
           <Button className="mt-2" content="Confirm" onClick={this.handleConfirm.bind(this)} />

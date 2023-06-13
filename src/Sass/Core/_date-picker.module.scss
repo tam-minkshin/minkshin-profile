@@ -1,7 +1,10 @@
 .date-picker-ctn {
-  @apply w-full;
+  @apply w-full my-1;
   .input-picker {
     @apply relative z-0;
+    .label {
+      @apply text-base font-semibold items-end text-outline;
+    }
     .input-datepicker:disabled {
       @apply w-full rounded-md border-2 border-outline px-2 bg-white text-dark;
     }

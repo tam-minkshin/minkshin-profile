@@ -80,7 +80,7 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
                 SĐT: <span className="text-white">{data.phone ?? "-"}</span>
               </p>
               <p className="text-color-success">
-                Ngày sinh: <span className="text-white">{data.dob ? Helper.formatDate(data.dob) : "-"}</span>
+                Ngày sinh: <span className="text-white">{data.dob ? Helper.formatDate(Number(data.dob)) : "-"}</span>
               </p>
               <div className="mt-2">
                 <Dialog handleShow={this.handleShow.bind(this)} contentBtn="Cập nhật" title="Update Form" isShowDialog={isShow} content={<UpdateProfileComponent handleConfirm={this.handleConfirm.bind(this)} defaultData={data} />} />

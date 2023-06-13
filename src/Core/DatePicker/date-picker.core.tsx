@@ -28,9 +28,9 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
   useEffect(() => {
     if (defaultValue) {
       setValue(Helper.formatDate(defaultValue));
-      return
+      return;
     }
-    setValue(Helper.formatDate(Date.now()))
+    setValue(Helper.formatDate(Date.now()));
   }, [defaultValue]);
   const handleChangeDate = (value: string) => {
     setValue(Helper.formatDate(value));
@@ -46,6 +46,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
   return (
     <div className={Style["date-picker-ctn"]}>
       <div className={Style["input-picker"]} onClick={handleClick}>
+        <label className={Style["label"]}>{label}</label>
         <input disabled={true} className={Style["input-datepicker"]} type="text" defaultValue={value} name={name} />
         <div className={classes} ref={test}>
           <Calendar defaultValue={defaultValue} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />
