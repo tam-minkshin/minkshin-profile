@@ -11,7 +11,7 @@ interface FormProps {
 
 interface FormState {
   data: {
-    [name: string]: string | number;
+    [name: string]: string;
   };
 }
 
@@ -29,16 +29,7 @@ class UpdateFormComponent extends React.Component<FormProps, FormState> {
       console.error(`UpdateFormComponent execute handleOnchange ${error.toString()}`);
     }
   }
-  handleOnchangeDate(name: string, value: number) {
-    try {
-      const { data } = this.state;
-      data[name] = value;
-      console.debug("UpdateFormComponent execute handleOnchange", data);
-      this.setState({ data });
-    } catch (error: any) {
-      console.error(`UpdateFormComponent execute handleOnchange ${error.toString()}`);
-    }
-  }
+  
   handleConfirm() {
     this.props.handleConfirm(this.state.data);
   }
@@ -56,7 +47,7 @@ class UpdateFormComponent extends React.Component<FormProps, FormState> {
               <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="phone" defaultValue={this.props.defaultData.phone ?? ""} />
             </Grid>
           </Grid>
-          <DatePicker defaultValue={Number(this.props.defaultData.dob)} label="Ngày sinh" onChange={this.handleOnchangeDate.bind(this)} name="dob" />
+          <DatePicker defaultValue={this.props.defaultData.dob} label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
         </form>
         <div className="flex justify-end">
           <Button className="mt-2" content="Confirm" onClick={this.handleConfirm.bind(this)} />

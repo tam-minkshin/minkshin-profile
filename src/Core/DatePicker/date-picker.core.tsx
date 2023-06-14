@@ -1,5 +1,5 @@
 import Calendar from "Core/Calendar";
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
 import Style from "Sass/Core/_date-picker.module.scss";
 import StyleCalendar from "Sass/Core/_calendar.module.scss";
 import Helper from "Service/Helper";
@@ -7,12 +7,12 @@ import Helper from "Service/Helper";
 interface DatePickerCoreProps {
   label: string;
   name: string;
-  onChange: (name: string, value: number) => void;
+  onChange: (name: string, value: string) => void;
   minYear?: number;
   maxYear?: number;
   minDate?: number;
   maxDate?: number;
-  defaultValue?: number | undefined;
+  defaultValue?: string;
 }
 interface DatePickerCoreStates {
   value: string;
@@ -24,7 +24,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
   const inputRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (defaultValue) {
-      setState((state) => ({ ...state, ...{ value: Helper.formatDate(defaultValue) } }));
+      setState((state) => ({ ...state, ...{ value: defaultValue } }));
       return;
     }
     setState((state) => ({ ...state, ...{ value: Helper.formatDate(Date.now()) } }));
@@ -37,22 +37,15 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
       },
       true
     );
-    return window.removeEventListener(
-      "click",
-      () => {
-        setState((state) => ({ ...state, ...{ classes: `${Style["calendar-pikcer-hidden"]}` } }));
-      },
-      true
-    );
   }, []);
 
   const handleChangeDate = (res: string) => {
-    state.value = Helper.formatDate(res);
+    state.value = res;
     setState({ ...state });
-    onChange(name, new Date(res).getTime());
+    onChange(name, res);
   };
   const handleClick = (e: MouseEvent) => {
-    if ((e.target as Element).className === StyleCalendar["day-allowed"] || (e.target as Element).className === `${StyleCalendar["day-allowed"]} ${StyleCalendar['day-picked']}`) {
+    if (((e.target as Element).className === StyleCalendar["day-allowed"] || (e.target as Element).className === `${StyleCalendar["day-allowed"]} ${StyleCalendar["day-picked"]}`)) {
       state.classes = `${Style["calendar-pikcer-hidden"]}`;
       setState({ ...state });
       return;
@@ -64,13 +57,21 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
     }
     setState({ ...state });
   };
+  const handleInputDate = (e: ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.split("/");
+    if (Number(value[0]) <= 31 && Number(value[1]) <= 12 && Number(value[2]) && value[2].length === 4 && value.findIndex(item=>item==='')===-1) {
+      state.value = `${value[0]}/${value[1]}/${value[2]}`
+      setState({ ...state });
+    }
+  };
+
   return (
     <div className={Style["date-picker-ctn"]}>
       <div ref={inputRef} className={Style["input-picker"]} onClick={handleClick}>
         <label className={Style["label"]}>{label}</label>
-        <input key={state.value} placeholder="DD/MM/YYYY" className={Style["input-datepicker"]} type="text" defaultValue={state.value} name={name} />
-        <div style={{}} className={state.classes}>
-          <Calendar defaultValue={defaultValue} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />
+        <input autoFocus key={state.value} placeholder="DD/MM/YYYY" className={Style["input-datepicker"]} type="text" defaultValue={state.value} name={name} onChange={handleInputDate} />
+        <div className={state.classes}>
+          <Calendar defaultValue={state.value} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />
         </div>
       </div>
     </div>

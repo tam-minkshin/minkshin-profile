@@ -11,18 +11,18 @@ interface FormProps {
 
 interface FormState {
   data: {
-    [name: string]: string | number ;
+    [name: string]: string ;
   };
 }
 
 class FormComponent extends React.Component<FormProps, FormState> {
   state: FormState = {
     data: {
-      dob:new Date("1998/1/20").getTime()
+      dob:"20/1/1998"
     },
   };
   
-  handleOnchange(name: string, value: string | number) {
+  handleOnchange(name: string, value: string) {
     try {
       const { data } = this.state;
       data[name] = value;
@@ -32,6 +32,7 @@ class FormComponent extends React.Component<FormProps, FormState> {
       console.error(`FormComponent execute handleOnchange ${error.toString()}`);
     }
   }
+  
   handleSubmit() {
     this.props.handleData(this.state.data);
   }
@@ -49,7 +50,7 @@ class FormComponent extends React.Component<FormProps, FormState> {
               <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="phone" />
             </Grid>
           </Grid>
-          <DatePicker defaultValue={Number(this.state.data.dob)} label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
+          <DatePicker defaultValue={this.state.data.dob} label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
           <Button className="mt-1" content={"Lưu"} onClick={this.handleSubmit.bind(this)} />
         </form>
       </div>

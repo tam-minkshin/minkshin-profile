@@ -3,6 +3,7 @@ import Style from "Sass/Core/_calendar.module.scss";
 import Days from "./Days";
 import Months from "./Months";
 import Years from "./Years";
+import Helper from "Service/Helper";
 export const VIEW_CALENDAR = {
   DAYS: 0,
   MONTHS: 1,
@@ -14,7 +15,7 @@ interface CalendarProps {
   minDate?: number;
   maxDate?: number;
   onPick: (value: string) => void;
-  defaultValue?: number;
+  defaultValue?: string;
 }
 
 export interface CalendarType {
@@ -33,10 +34,16 @@ const Calendar: FC<CalendarProps> = (props) => {
   const { minYear, maxYear, minDate, maxDate, onPick, defaultValue } = props;
   useEffect(() => {
     if (defaultValue) {
-      const time = new Date(defaultValue);
-      state.currentDay = time.getDate();
-      state.currentMonth = time.getMonth()+1;
-      state.currentYear = time.getFullYear();
+      const time = new Date(Helper.parseTimestamp(defaultValue));
+
+      setState((state) => ({
+        ...state,
+        ...{
+          currentDay: time.getDate(),
+          currentMonth: time.getMonth() + 1,
+          currentYear: time.getFullYear(),
+        },
+      }));
     }
   }, [defaultValue]);
   const handleBackMonth = () => {
@@ -62,7 +69,7 @@ const Calendar: FC<CalendarProps> = (props) => {
   const handlePickDate = (day: number) => {
     state.currentDay = day + 1;
     setState({ ...state });
-    onPick(`${currentYear}/${currentMonth}/${day + 1}`);
+    onPick(`${day + 1}/${currentMonth}/${currentYear}`);
   };
   const handleChangeView = (view: number, data: number) => {
     switch (view) {
