@@ -68,7 +68,7 @@ const Calendar: FC<CalendarProps> = (props) => {
   const handlePickDate = (day: number) => {
     state.currentDay = day + 1;
     setState({ ...state });
-    onPick(Helper.parseTimestamp(`${currentDay}/${currentMonth}/${currentYear}`));
+    onPick(Helper.parseTimestamp(`${day + 1}/${currentMonth}/${currentYear}`));
   };
   const handleChangeView = (view: number, data: number) => {
     switch (view) {

@@ -24,6 +24,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
   const { label, name, onChange, minYear = 1900, maxYear = 2100, minDate = new Date(`${minYear}/${1}/${1}`).getTime(), maxDate = new Date(`${maxYear}/${12}/${31}`).getTime(), defaultValue } = props;
   const [state, setState] = useState<DatePickerCoreStates>({ valueInput: "", valueDate: 0, classes: `${Style["calendar-pikcer-hidden"]}` });
   const inputRef = useRef<HTMLDivElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (defaultValue) {
       setState((state) => ({ ...state, ...{ valueInput: Helper.formatDate(defaultValue), valueDate: defaultValue } }));
@@ -32,13 +33,12 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
     setState((state) => ({ ...state, ...{ valueInput: Helper.formatDate(Date.now()), valueDate: Date.now() } }));
   }, [defaultValue]);
   useEffect(() => {
-    window.addEventListener(
-      "click",
-      () => {
+    window.addEventListener("click", (ev: globalThis.MouseEvent) => {
+      const ele = calendarRef.current?.getBoundingClientRect()
+      if((ele && (ev.x < ele.left || ev.x > ele.right) && (ev.y < ele.bottom || ev.y > ele.top)) && (ev.target as Element).className !== Style["input-datepicker"]){
         setState((state) => ({ ...state, ...{ classes: `${Style["calendar-pikcer-hidden"]}` } }));
-      },
-      true
-    );
+      }
+    });
   }, []);
 
   const handleChangeDate = (res: number) => {
@@ -53,6 +53,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
       setState({ ...state });
       return;
     }
+    console.log('check')
     if (inputRef.current && inputRef.current?.getBoundingClientRect().y > window.innerHeight / 2) {
       state.classes = `${Style["calendar-pikcer-top"]}`;
     } else {
@@ -72,11 +73,11 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
     <div className={Style["date-picker-ctn"]}>
       <div ref={inputRef} className={Style["input-picker"]} onClick={handleClick}>
         <label className={Style["label"]}>{label}</label>
-        <input key={state.valueInput} placeholder="DD/MM/YYYY" className={Style["input-datepicker"]} type="text" defaultValue={state.valueInput} name={name} onChange={handleInputDate} />
+        <input key={state.valueInput} placeholder="DD/MM/YYYY" onClick={handleClick} className={Style["input-datepicker"]} type="text" defaultValue={state.valueInput} name={name} onChange={handleInputDate} />
         <div className={Style["calendar-icon"]}>
           <FontAwesomeIcon icon={icon({ name: "calendar", style: "regular" })} />
         </div>
-        <div className={state.classes}>
+        <div ref={calendarRef} className={state.classes}>
           <Calendar defaultValue={state.valueDate} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />
         </div>
       </div>
