@@ -5,7 +5,7 @@
   @apply w-10 h-10;
 }
 @mixin not-allowed {
-  @apply cursor-not-allowed border-2 bg-gray-800 text-white text-center;
+  @apply cursor-not-allowed border bg-gray-800 text-white text-center;
 }
 @keyframes fadeIn {
   0% {
@@ -16,7 +16,7 @@
   }
 }
 .calendar-container {
-  @apply text-white w-96 border-2 bg-dark;
+  @apply text-white w-96 border bg-dark;
   .content-animation {
     animation: fadeIn 0.7s;
   }
@@ -31,7 +31,7 @@
       @apply text-center;
     }
     .day-allowed {
-      @apply border-2;
+      @apply border;
     }
     .day-picked,
     .day-allowed:hover {
@@ -44,10 +44,10 @@
 }
 .months-container {
   .month-header {
-    @apply text-center text-outline font-semibold text-lg py-3 cursor-pointer border-2;
+    @apply text-center text-outline font-semibold text-lg py-3 cursor-pointer border;
   }
   .month-allowed {
-    @apply text-center cursor-pointer border-2 text-white py-4;
+    @apply text-center cursor-pointer border text-white py-4;
   }
   .month-picked,
   .month-allowed:hover {
@@ -62,11 +62,12 @@
   @apply max-h-72 overflow-y-scroll;
   
   .year-allowed {
-    @apply text-center py-2 cursor-pointer border-2 text-white;
+    @apply text-center py-2 cursor-pointer text-white;
   }
   #currentYear,
   .year-allowed:hover {
     @include pick-a-day;
+    @apply rounded-xl
   }
   .year-not-allowed {
     @apply py-2;
