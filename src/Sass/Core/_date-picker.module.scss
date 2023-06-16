@@ -8,6 +8,9 @@
     .input-datepicker {
       @apply w-full rounded-md border-2 border-outline px-2 bg-white text-dark;
     }
+    .calendar-icon {
+      @apply absolute z-10 top-1/2 right-2
+    }
   }
   .calendar-pikcer-hidden {
     @apply hidden;

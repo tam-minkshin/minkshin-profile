@@ -7,7 +7,7 @@ import UpdateProfileComponent from "Componnets/UpdateForm";
 import TranferList from "Core/TranferList";
 
 interface ProfileProps {}
-type TranferItem = Array<{ label: string; value: string }>
+type TranferItem = Array<{ label: string; value: string }>;
 export interface ProfileState {
   data: {
     [name: string]: string;
@@ -21,7 +21,10 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
   state: ProfileState = {
     data: {},
     leftList: [{ label: "Chữ A", value: "A" }],
-    rightList: [{ label: "Chữ B", value: "B" },{ label: "Chữ C", value: "C" }],
+    rightList: [
+      { label: "Chữ B", value: "B" },
+      { label: "Chữ C", value: "C" },
+    ],
     isShow: false,
   };
 
@@ -44,7 +47,7 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
     isShow = !isShow;
     this.setState({ isShow });
   }
-  handleConfirm(dataProp: { [name: string]: string | number}) {
+  handleConfirm(dataProp: { [name: string]: string | number }) {
     let { data } = this.state;
     for (const key in dataProp) {
       data[key] = `${dataProp[key]}`;
@@ -52,13 +55,12 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
     this.handleShow();
     this.setState({ data });
   }
-  handleTranferList<L>(left:L,right:L){
+  handleTranferList<L>(left: L, right: L) {
     try {
-      console.debug('ProfileComponent execute handleTranferList left',left)
-      console.debug('ProfileComponent execute handleTranferList right',right)
-
-    } catch (error:any) {
-      console.error(`ProfileComponent execute handleTranferList ${error.toString()}`)
+      console.debug("ProfileComponent execute handleTranferList left", left);
+      console.debug("ProfileComponent execute handleTranferList right", right);
+    } catch (error: any) {
+      console.error(`ProfileComponent execute handleTranferList ${error.toString()}`);
     }
   }
   render() {
@@ -89,7 +91,7 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
           )}
         </div>
         <div className={Style["section"]}>
-          <TranferList leftList={leftList} rightList={rightList} onChange={this.handleTranferList.bind(this)}/>
+          <TranferList leftList={leftList} rightList={rightList} onChange={this.handleTranferList.bind(this)} />
         </div>
       </>
     );

@@ -3,7 +3,8 @@ import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
 import Style from "Sass/Core/_date-picker.module.scss";
 import StyleCalendar from "Sass/Core/_calendar.module.scss";
 import Helper from "Service/Helper";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 interface DatePickerCoreProps {
   label: string;
   name: string;
@@ -28,7 +29,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
       setState((state) => ({ ...state, ...{ valueInput: Helper.formatDate(defaultValue), valueDate: defaultValue } }));
       return;
     }
-    setState((state) => ({ ...state, ...{ valueInput: Helper.formatDate(Date.now()), valueDate: Date.now() }}));
+    setState((state) => ({ ...state, ...{ valueInput: Helper.formatDate(Date.now()), valueDate: Date.now() } }));
   }, [defaultValue]);
   useEffect(() => {
     window.addEventListener(
@@ -72,6 +73,9 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
       <div ref={inputRef} className={Style["input-picker"]} onClick={handleClick}>
         <label className={Style["label"]}>{label}</label>
         <input key={state.valueInput} placeholder="DD/MM/YYYY" className={Style["input-datepicker"]} type="text" defaultValue={state.valueInput} name={name} onChange={handleInputDate} />
+        <div className={Style["calendar-icon"]}>
+          <FontAwesomeIcon icon={icon({ name: "calendar", style: "regular" })} />
+        </div>
         <div className={state.classes}>
           <Calendar defaultValue={state.valueDate} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />
         </div>
