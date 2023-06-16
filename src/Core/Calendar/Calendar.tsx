@@ -14,8 +14,8 @@ interface CalendarProps {
   maxYear: number;
   minDate?: number;
   maxDate?: number;
-  onPick: (value: string) => void;
-  defaultValue?: string;
+  onPick: (value: number) => void;
+  defaultValue?: number;
 }
 
 export interface CalendarType {
@@ -34,8 +34,7 @@ const Calendar: FC<CalendarProps> = (props) => {
   const { minYear, maxYear, minDate, maxDate, onPick, defaultValue } = props;
   useEffect(() => {
     if (defaultValue) {
-      const time = new Date(Helper.parseTimestamp(defaultValue));
-
+      const time = new Date(defaultValue);
       setState((state) => ({
         ...state,
         ...{
@@ -69,7 +68,7 @@ const Calendar: FC<CalendarProps> = (props) => {
   const handlePickDate = (day: number) => {
     state.currentDay = day + 1;
     setState({ ...state });
-    onPick(`${day + 1}/${currentMonth}/${currentYear}`);
+    onPick(Helper.parseTimestamp(`${currentDay}/${currentMonth}/${currentYear}`));
   };
   const handleChangeView = (view: number, data: number) => {
     switch (view) {

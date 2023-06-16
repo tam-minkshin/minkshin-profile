@@ -12,7 +12,7 @@ class Helper {
   static renderArray(value: number) {
     return Array.from(Array(value).keys());
   }
-  static formatDate(value: string | number) {
+  static formatDate(value: number) {
     try {
       const time = new Date(value);
       return `${`${time.getDate()}`.length < 2 ? `0${time.getDate()}` : `${time.getDate()}`}/${`${time.getMonth()}`.length < 2 ? `0${time.getMonth() + 1}` : `${time.getMonth() + 1}`}/${time.getFullYear()}`;

@@ -3,6 +3,7 @@ import Input from "Core/Input";
 import Button from "Core/Button";
 import Grid from "Core/Grid";
 import DatePicker from "Core/DatePicker";
+import Helper from "Service/Helper";
 
 interface FormProps {
   handleConfirm: (data: { [name: string]: string | number }) => void;
@@ -11,7 +12,7 @@ interface FormProps {
 
 interface FormState {
   data: {
-    [name: string]: string;
+    [name: string]: string | number;
   };
 }
 
@@ -19,7 +20,7 @@ class UpdateFormComponent extends React.Component<FormProps, FormState> {
   state: FormState = {
     data: {},
   };
-  handleOnchange(name: string, value: string) {
+  handleOnchange(name: string, value: string | number) {
     try {
       const { data } = this.state;
       data[name] = value;
@@ -47,7 +48,7 @@ class UpdateFormComponent extends React.Component<FormProps, FormState> {
               <Input label="Phone" onChange={this.handleOnchange.bind(this)} name="phone" defaultValue={this.props.defaultData.phone ?? ""} />
             </Grid>
           </Grid>
-          <DatePicker defaultValue={this.props.defaultData.dob} label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
+          <DatePicker defaultValue={Number(this.props.defaultData.dob)} label="Ngày sinh" onChange={this.handleOnchange.bind(this)} name="dob" />
         </form>
         <div className="flex justify-end">
           <Button className="mt-2" content="Confirm" onClick={this.handleConfirm.bind(this)} />
