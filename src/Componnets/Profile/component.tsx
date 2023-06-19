@@ -7,6 +7,7 @@ import UpdateProfileComponent from "Componnets/UpdateForm";
 import TranferList from "Core/TranferList";
 import Tabs from "Core/Tabs";
 import { ConfigTab } from "Core/Tabs/tabs.core";
+import Image from "Core/Image";
 
 interface ProfileProps {}
 type TranferItem = Array<{ label: string; value: string }>;
@@ -106,6 +107,9 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
         </div>
         <div className={Style["section"]}>
           <Tabs configTab={this.state.configTab} />
+        </div>
+        <div className={Style["section"]}>
+          <Image/>
         </div>
       </>
     );

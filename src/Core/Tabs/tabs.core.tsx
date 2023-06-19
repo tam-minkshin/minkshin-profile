@@ -48,7 +48,7 @@ const TabsCore: FC<TabsCoreProps> = (props) => {
   const handleSelect = (index: number) => {
     if (current) {
       state.borderItem.left = current.children[index].getBoundingClientRect().left - current.offsetLeft + (index > 0 ? 28 : 0);
-      state.borderItem.width = labelRef.current?.children[index].getBoundingClientRect().width - (index > 0 ? 28 : 0);
+      state.borderItem.width = current.children[index].getBoundingClientRect().width - (index > 0 ? 28 : 0);
       state.defaultTab = index
     }
     setState({ ...state });
