@@ -59,7 +59,7 @@ const TabsCore: FC<TabsCoreProps> = (props) => {
         <>
           <div ref={labelRef} className={Style['container-labels']}>
             {configTab.map((item, id) => (
-              <div key={id} className={Style['label-tab']}>
+              <div key={id} className={`${Style['label-tab']} ${id === state.defaultTab ? Style['label-tab--selected'] : ""}`}>
                 <h1 onClick={() => handleSelect(id)}>
                   {item.label}
                 </h1>

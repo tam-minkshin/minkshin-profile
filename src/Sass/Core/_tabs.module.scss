@@ -3,7 +3,10 @@
   .container-labels {
     @apply flex;
     .label-tab {
-      @apply text-white font-bold cursor-pointer;
+      @apply text-white font-bold cursor-pointer hover:text-outline;
+    }
+    .label-tab--selected {
+      @apply text-outline;
     }
     .label-tab:nth-child(n + 2) {
       @apply pl-7;
