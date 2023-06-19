@@ -5,6 +5,8 @@ import Style from "Sass/Component/_profile.module.scss";
 import Dialog from "Core/Dialog";
 import UpdateProfileComponent from "Componnets/UpdateForm";
 import TranferList from "Core/TranferList";
+import Tabs from "Core/Tabs";
+import { ConfigTab } from "Core/Tabs/tabs.core";
 
 interface ProfileProps {}
 type TranferItem = Array<{ label: string; value: string }>;
@@ -15,6 +17,7 @@ export interface ProfileState {
   leftList: TranferItem;
   rightList: TranferItem;
   isShow: boolean;
+  configTab: ConfigTab;
 }
 
 class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
@@ -26,13 +29,21 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
       { label: "Chữ C", value: "C" },
     ],
     isShow: false,
+    configTab: [],
   };
 
+  componentDidMount(): void {
+    let {configTab} = this.state
+    for (let i = 0; configTab.length < 3; i++) {
+      configTab.push({ id: i, label: `Tab ${i}`, content: <>{i}</> });
+    }
+    console.log('check configTab',configTab)
+    this.setState({configTab})
+  }
   handleData(dataProp: { [name: string]: string | number }) {
     try {
       const { data } = this.state;
       console.debug("ProfileComponent execute handleOnchange dataProp", dataProp);
-
       for (const key in dataProp) {
         data[key] = `${dataProp[key]}`;
       }
@@ -92,6 +103,9 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
         </div>
         <div className={Style["section"]}>
           <TranferList leftList={leftList} rightList={rightList} onChange={this.handleTranferList.bind(this)} />
+        </div>
+        <div className={Style["section"]}>
+          <Tabs configTab={this.state.configTab} />
         </div>
       </>
     );

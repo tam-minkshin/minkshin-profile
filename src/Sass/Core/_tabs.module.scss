@@ -1,0 +1,12 @@
+.container-tabs {
+  @apply w-full;
+  .container-labels {
+    @apply flex;
+    .label-tab {
+      @apply text-white font-bold cursor-pointer;
+    }
+    .label-tab:nth-child(n + 2) {
+      @apply pl-7;
+    }
+  }
+}

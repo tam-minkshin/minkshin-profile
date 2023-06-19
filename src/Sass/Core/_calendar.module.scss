@@ -59,8 +59,8 @@
   }
 }
 .years-container {
-  @apply max-h-72 overflow-y-scroll;
-  
+  @apply overflow-y-auto;
+  height: 361px;
   .year-allowed {
     @apply text-center py-2 cursor-pointer text-white;
   }

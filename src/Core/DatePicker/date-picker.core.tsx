@@ -36,7 +36,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
     window.addEventListener("click", (ev: globalThis.MouseEvent) => {
       const ele = calendarRef.current?.getBoundingClientRect();
       const click = ev.target as Element;
-      const isCalendarClicked = ele && ev.x < ele.right && ev.x > ele.left && ev.y < ele.bottom && ev.y > ele.top;
+      const isCalendarClicked = ele ? ev.x < ele.right && ev.x > ele.left && ev.y < ele.bottom && ev.y > ele.top : false;
       if (!isCalendarClicked && click.className !== Style["input-datepicker"]) {
         setState((state) => ({ ...state, ...{ classes: `${Style["calendar-pikcer-hidden"]}` } }));
       }
@@ -50,6 +50,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
     onChange(name, res);
   };
   const handleClick = (e: MouseEvent) => {
+    console.log('check ref',inputRef)
     if ((e.target as Element).className === StyleCalendar["day-allowed"] || (e.target as Element).className === `${StyleCalendar["day-allowed"]} ${StyleCalendar["day-picked"]}`) {
       state.classes = `${Style["calendar-pikcer-hidden"]}`;
       setState({ ...state });
