@@ -34,8 +34,10 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
   }, [defaultValue]);
   useEffect(() => {
     window.addEventListener("click", (ev: globalThis.MouseEvent) => {
-      const ele = calendarRef.current?.getBoundingClientRect()
-      if((ele && (ev.x < ele.left || ev.x > ele.right) && (ev.y < ele.bottom || ev.y > ele.top)) && (ev.target as Element).className !== Style["input-datepicker"]){
+      const ele = calendarRef.current?.getBoundingClientRect();
+      const click = ev.target as Element;
+      const isCalendarClicked = ele && ev.x < ele.right && ev.x > ele.left && ev.y < ele.bottom && ev.y > ele.top;
+      if (!isCalendarClicked && click.className !== Style["input-datepicker"]) {
         setState((state) => ({ ...state, ...{ classes: `${Style["calendar-pikcer-hidden"]}` } }));
       }
     });
@@ -53,7 +55,6 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
       setState({ ...state });
       return;
     }
-    console.log('check')
     if (inputRef.current && inputRef.current?.getBoundingClientRect().y > window.innerHeight / 2) {
       state.classes = `${Style["calendar-pikcer-top"]}`;
     } else {
@@ -73,7 +74,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
     <div className={Style["date-picker-ctn"]}>
       <div ref={inputRef} className={Style["input-picker"]} onClick={handleClick}>
         <label className={Style["label"]}>{label}</label>
-        <input key={state.valueInput} placeholder="DD/MM/YYYY" onClick={handleClick} className={Style["input-datepicker"]} type="text" defaultValue={state.valueInput} name={name} onChange={handleInputDate} />
+        <input key={state.valueInput} placeholder="DD/MM/YYYY" className={Style["input-datepicker"]} type="text" defaultValue={state.valueInput} name={name} onChange={handleInputDate} />
         <div className={Style["calendar-icon"]}>
           <FontAwesomeIcon icon={icon({ name: "calendar", style: "regular" })} />
         </div>
