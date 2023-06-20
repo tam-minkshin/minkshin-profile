@@ -38,7 +38,6 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
     for (let i = 0; configTab.length < 3; i++) {
       configTab.push({ id: i, label: `Tab ${i}`, content: <>{i}</> });
     }
-    console.log('check configTab',configTab)
     this.setState({configTab})
   }
   handleData(dataProp: { [name: string]: string | number }) {

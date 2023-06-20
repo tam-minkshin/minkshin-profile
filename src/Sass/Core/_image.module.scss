@@ -1,0 +1,12 @@
+.image-container {
+  @apply cursor-zoom-in max-w-xs;
+}
+.image-menu {
+  @apply absolute z-10 bg-gray-700/40 w-screen h-fit top-0 left-0;
+  .menu-content{
+    @apply flex py-7 px-3 justify-end gap-7;
+  }
+}
+.image-preview{
+    @apply absolute z-0 bg-black/75 w-screen h-screen top-0 left-0
+}
