@@ -77,7 +77,6 @@ const TranferHook: FC<TranferHookProps> = (props) => {
     setState({ ...state });
   };
   const handleSearch = (name: string, value: string) => {
-    console.log('check value',value)
     const temp: TranferList = [];
     switch (name) {
       case "searchLeft":

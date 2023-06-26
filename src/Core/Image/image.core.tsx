@@ -4,7 +4,9 @@ import Style from "Sass/Core/_image.module.scss";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faExpand, faRightLeft, faRotateLeft, faRotateRight, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { styled } from "styled-components";
-interface ImageCoreProps {}
+interface ImageCoreProps {
+  linkImg:string
+}
 interface ImageCoreState {
   scaleY: number;
   scaleX: number;
@@ -19,7 +21,8 @@ const TransForm = styled.div<{ $scaleY: number; $scaleX: number; $rotate: number
   transform: ${(props) => `scale3d(${props.$scaleX},${props.$scaleY},1) rotate(${props.$rotate}deg)`};
   transition: 0.5s;
 `;
-const ImageCore: FC<ImageCoreProps> = () => {
+const ImageCore: FC<ImageCoreProps> = (props) => {
+  const {linkImg} = props
   const [state, setState] = useState<ImageCoreState>({ scaleY: 1, scaleX: 1, rotate: 0, isExpand: false, isClosed: true });
   const handleAction = (item: IconProp | string) => {
     switch (item) {
@@ -51,7 +54,7 @@ const ImageCore: FC<ImageCoreProps> = () => {
   return (
     <>
       <div className={Style["image-container"]} onClick={handleReview}>
-        <img src="https://picsum.photos/700/700?random=1" />
+        <img alt={linkImg} src={linkImg} />
       </div>
       {!state.isClosed && (
         <>
@@ -67,7 +70,7 @@ const ImageCore: FC<ImageCoreProps> = () => {
           <div className={Style["image-preview"]}>
             <div className={Style["content-preview"]}>
               <TransForm $scaleY={state.scaleY} $scaleX={state.scaleX} $rotate={state.rotate} $isExpand={state.isExpand}>
-                <img style={{height:state.isExpand ? '100vh' : 'auto'}} src="https://picsum.photos/700/700?random=1" />
+                <img alt={linkImg} style={{height:state.isExpand ? '100vh' : 'auto'}} src={linkImg} />
               </TransForm>
             </div>
           </div>

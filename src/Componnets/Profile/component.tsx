@@ -108,7 +108,7 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
           <Tabs configTab={this.state.configTab} />
         </div>
         <div className={Style["section"]}>
-          <Image/>
+          <Image linkImg="https://picsum.photos/200/300?random=1"/>
         </div>
       </>
     );
