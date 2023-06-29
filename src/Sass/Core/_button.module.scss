@@ -1,3 +1,7 @@
 .background--btn{
-    @apply bg-outline text-black font-semibold w-max p-3 rounded
+    @apply bg-outline text-black font-semibold w-max p-3 rounded;
+    
+}
+:disabled{
+    @apply bg-slate-500 cursor-not-allowed w-max p-3 rounded text-light
 }

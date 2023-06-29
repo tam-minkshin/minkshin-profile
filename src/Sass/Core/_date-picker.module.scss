@@ -1,7 +1,7 @@
 .date-picker-ctn {
   @apply w-full my-1;
   .input-picker {
-    @apply relative z-0;
+    @apply relative z-10;
     .label {
       @apply text-base font-semibold items-end text-outline;
     }

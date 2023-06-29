@@ -21,13 +21,13 @@ const Months: FC<MonthsProps> = (props) => {
     if (minDate > monthMinTime || maxDate < monthMaxTime) {
       return (
         <Grid key={id} item xs={4}>
-          <div className={`${Style["month-not-allowed"]} ${item + 1 === currentMonth ? `${Style["month-picked"]}` : ""}`}>{`Tháng ${item + 1}`}</div>
+          <div className={`${Style["month-not-allowed"]} ${item + 1 === currentMonth && `${Style["month-picked"]}`}`}>{`Tháng ${item + 1}`}</div>
         </Grid>
       );
     }
     return (
       <Grid key={id} item xs={4}>
-        <div className={`${Style["month-allowed"]} ${item + 1 === currentMonth ? `${Style["month-picked"]}` : ""}`} onClick={() => handleChangeView(VIEW_CALENDAR.DAYS, item)}>{`Tháng ${item + 1}`}</div>
+        <div className={`${Style["month-allowed"]} ${item + 1 === currentMonth && `${Style["month-picked"]}`}`} onClick={() => handleChangeView(VIEW_CALENDAR.DAYS, item)}>{`Tháng ${item + 1}`}</div>
       </Grid>
     );
   };

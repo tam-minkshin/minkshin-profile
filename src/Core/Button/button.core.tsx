@@ -5,14 +5,22 @@ import Style from "Sass/Core/_button.module.scss";
 interface Buttonprops {
   content: ReactNode;
   className?: string;
-  onClick: ()=>void
+  onClick: () => void;
+  isDisabled?: boolean;
 }
 const ButtonCore = (props: Buttonprops) => {
-  const { content, className = "", onClick } = props;
-  const handleClick = (event:FormEvent)=>{
-    event.preventDefault()
-    onClick()
-  }
-  return <button onClick={handleClick} className={mergeClass(className, Style["background--btn"])}>{content}</button>;
+  const { content, className = "", onClick, isDisabled = false } = props;
+  const handleClick = (event: FormEvent) => {
+    event.preventDefault();
+    onClick();
+  };
+  return (
+    <button
+      disabled={isDisabled}
+      onClick={handleClick}
+      className={isDisabled ? "none" : mergeClass(Style["background--btn"], className)}>
+      {content}
+    </button>
+  );
 };
 export default ButtonCore;

@@ -85,7 +85,7 @@ const TranferHook: FC<TranferHookProps> = (props) => {
           setState({ ...state });
           return;
         }
-        state.dataLeft.map((item) => {
+        state.dataLeft.forEach((item) => {
           if (item.label.toUpperCase().search(value.toUpperCase()) !== -1) {
             temp.push(item);
           }
@@ -99,7 +99,7 @@ const TranferHook: FC<TranferHookProps> = (props) => {
           setState({ ...state });
           return;
         }
-        state.dataRight.map((item) => {
+        state.dataRight.forEach((item) => {
           if (item.label.toUpperCase().search(value.toUpperCase()) !== -1) {
             temp.push(item);
           }

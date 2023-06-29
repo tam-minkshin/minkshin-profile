@@ -4,10 +4,10 @@ import Days from "./Days";
 import Months from "./Months";
 import Years from "./Years";
 import Helper from "Service/Helper";
-export const VIEW_CALENDAR = {
-  DAYS: 0,
-  MONTHS: 1,
-  YEARS: 2,
+export enum VIEW_CALENDAR {
+  DAYS,
+  MONTHS,
+  YEARS,
 };
 interface CalendarProps {
   minYear: number;

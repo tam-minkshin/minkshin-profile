@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
-import Style from "Sass/Core/_tabs.module.scss"
+import Style from "Sass/Core/_tabs.module.scss";
 type ItemTab = { id: number; label: string; content: ReactNode };
 export type ConfigTab = Array<ItemTab>;
 interface TabsCoreProps {
@@ -32,15 +32,13 @@ const TabsCore: FC<TabsCoreProps> = (props) => {
   });
   useEffect(() => {
     const index = defaultTab;
-    setState((state) => ({ ...state, ...{ defaultTab: index } }));
+    setState((state) => ({ ...state, defaultTab: index }));
     if (current) {
       setState((state) => ({
         ...state,
-        ...{
-          borderItem: {
-            left: current.children[index].getBoundingClientRect().left - current.offsetLeft + (index > 0 ? 28 : 0),
-            width: current.children[index].getBoundingClientRect().width - (index > 0 ? 28 : 0),
-          },
+        borderItem: {
+          left: current.children[index].getBoundingClientRect().left - current.offsetLeft + (index > 0 ? 28 : 0),
+          width: current.children[index].getBoundingClientRect().width - (index > 0 ? 28 : 0),
         },
       }));
     }
@@ -49,20 +47,18 @@ const TabsCore: FC<TabsCoreProps> = (props) => {
     if (current) {
       state.borderItem.left = current.children[index].getBoundingClientRect().left - current.offsetLeft + (index > 0 ? 28 : 0);
       state.borderItem.width = current.children[index].getBoundingClientRect().width - (index > 0 ? 28 : 0);
-      state.defaultTab = index
+      state.defaultTab = index;
     }
     setState({ ...state });
   };
   return (
-    <div className={Style['container-tabs']}>
+    <div className={Style["container-tabs"]}>
       {configTab.length > 0 && (
         <>
-          <div ref={labelRef} className={Style['container-labels']}>
+          <div ref={labelRef} className={Style["container-labels"]}>
             {configTab.map((item, id) => (
-              <div key={id} className={`${Style['label-tab']} ${id === state.defaultTab ? Style['label-tab--selected'] : ""}`}>
-                <h1 onClick={() => handleSelect(id)}>
-                  {item.label}
-                </h1>
+              <div key={id} className={`${Style["label-tab"]} ${id === state.defaultTab ? Style["label-tab--selected"] : ""}`}>
+                <h1 onClick={() => handleSelect(id)}>{item.label}</h1>
               </div>
             ))}
           </div>

@@ -1,0 +1,14 @@
+.pagination-container{
+    @apply flex justify-end mt-2;
+    .pagination-numbers{
+        @apply flex justify-between gap-2;
+        .btn-number{
+            @apply bg-dark border border-outline text-light;
+        }
+        .btn-number--selected{
+        }
+        .btn-number--cutted{
+            @apply h-fit tracking-widest leading-10;
+        }
+    }
+}

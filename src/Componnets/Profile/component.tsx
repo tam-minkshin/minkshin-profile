@@ -8,6 +8,7 @@ import TranferList from "Core/TranferList";
 import Tabs from "Core/Tabs";
 import { ConfigTab } from "Core/Tabs/tabs.core";
 import Image from "Core/Image";
+import Table from "Core/Table";
 
 interface ProfileProps {}
 type TranferItem = Array<{ label: string; value: string }>;
@@ -109,6 +110,9 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
         </div>
         <div className={Style["section"]}>
           <Image linkImg="https://picsum.photos/200/300?random=1"/>
+        </div>
+        <div className={Style["section"]}>
+          <Table/>
         </div>
       </>
     );
