@@ -20,6 +20,8 @@ export interface ProfileState {
   rightList: TranferItem;
   isShow: boolean;
   configTab: ConfigTab;
+  column:Array<{field:string,label:string}>
+  dataList:Array<{[name:string]:any}>
 }
 
 class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
@@ -32,26 +34,51 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
     ],
     isShow: false,
     configTab: [],
+    column:[
+      { field: "name", label: "Họ tên" },
+      { field: "dob", label: "Ngày sinh" },
+      { field: "email", label: "Email" },
+    ],
+    dataList:[]
   };
 
   componentDidMount(): void {
-    let {configTab} = this.state
+    let { configTab, dataList } = this.state;
     for (let i = 0; configTab.length < 3; i++) {
       configTab.push({ id: i, label: `Tab ${i}`, content: <>{i}</> });
     }
-    this.setState({configTab})
+    const url =
+      "https://649e88de245f077f3e9c7e10.mockapi.io/TableListExample";
+    const options = {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    };
+    const logJSONData = async () => {
+      const res = await fetch(url, options);
+      dataList = await res.json();
+      this.setState({dataList})
+    };
+    logJSONData();
+    this.setState({ configTab });
   }
   handleData(dataProp: { [name: string]: string | number }) {
     try {
       const { data } = this.state;
-      console.debug("ProfileComponent execute handleOnchange dataProp", dataProp);
+      console.debug(
+        "ProfileComponent execute handleOnchange dataProp",
+        dataProp
+      );
       for (const key in dataProp) {
         data[key] = `${dataProp[key]}`;
       }
       console.debug("ProfileComponent execute handleOnchange", data);
       this.setState({ data });
     } catch (error: any) {
-      console.error(`ProfileComponent execute handleOnchange ${error.toString()}`);
+      console.error(
+        `ProfileComponent execute handleOnchange ${error.toString()}`
+      );
     }
   }
   handleShow() {
@@ -72,11 +99,14 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
       console.debug("ProfileComponent execute handleTranferList left", left);
       console.debug("ProfileComponent execute handleTranferList right", right);
     } catch (error: any) {
-      console.error(`ProfileComponent execute handleTranferList ${error.toString()}`);
+      console.error(
+        `ProfileComponent execute handleTranferList ${error.toString()}`
+      );
     }
   }
+
   render() {
-    const { data, isShow, leftList, rightList } = this.state;
+    const { data, isShow, leftList, rightList, column, dataList } = this.state;
     return (
       <>
         <div className={Style["section"]}>
@@ -94,25 +124,43 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
                 SĐT: <span className="text-white">{data.phone ?? "-"}</span>
               </p>
               <p className="text-color-success">
-                Ngày sinh: <span className="text-white">{data.dob ? Helper.formatDate(Number(data.dob)) : "-"}</span>
+                Ngày sinh:{" "}
+                <span className="text-white">
+                  {data.dob ? Helper.formatDate(Number(data.dob)) : "-"}
+                </span>
               </p>
               <div className="mt-2">
-                <Dialog handleShow={this.handleShow.bind(this)} contentBtn="Cập nhật" title="Update Form" isShowDialog={isShow} content={<UpdateProfileComponent handleConfirm={this.handleConfirm.bind(this)} defaultData={data} />} />
+                <Dialog
+                  handleShow={this.handleShow.bind(this)}
+                  contentBtn="Cập nhật"
+                  title="Update Form"
+                  isShowDialog={isShow}
+                  content={
+                    <UpdateProfileComponent
+                      handleConfirm={this.handleConfirm.bind(this)}
+                      defaultData={data}
+                    />
+                  }
+                />
               </div>
             </>
           )}
         </div>
         <div className={Style["section"]}>
-          <TranferList leftList={leftList} rightList={rightList} onChange={this.handleTranferList.bind(this)} />
+          <TranferList
+            leftList={leftList}
+            rightList={rightList}
+            onChange={this.handleTranferList.bind(this)}
+          />
         </div>
         <div className={Style["section"]}>
           <Tabs configTab={this.state.configTab} />
         </div>
         <div className={Style["section"]}>
-          <Image linkImg="https://picsum.photos/200/300?random=1"/>
+          <Image linkImg="https://picsum.photos/200/300?random=1" />
         </div>
         <div className={Style["section"]}>
-          <Table/>
+          <Table columns={column} dataList={dataList} isAutoPagin />
         </div>
       </>
     );

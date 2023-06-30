@@ -1,11 +1,19 @@
 .pagination-container{
     @apply flex justify-end mt-2;
+    .page-option-container{
+        @apply flex justify-center items-center mr-2;
+        .page-select{
+            @apply text-dark rounded-md w-16 h-7 text-center border-2 border-outline focus:outline-none;
+        }
+    }
     .pagination-numbers{
         @apply flex justify-between gap-2;
         .btn-number{
             @apply bg-dark border border-outline text-light;
+            min-width: 3rem
         }
         .btn-number--selected{
+            min-width: 3rem
         }
         .btn-number--cutted{
             @apply h-fit tracking-widest leading-10;

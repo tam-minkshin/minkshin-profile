@@ -31,5 +31,8 @@ class Helper {
       throw new Error(`invalid value ${value}`);
     }
   }
+  static deepClone(data:any) {
+    return JSON.parse(JSON.stringify(data))
+  }
 }
 export default Helper;

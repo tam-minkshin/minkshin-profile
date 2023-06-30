@@ -1,2 +1,2 @@
-import Pagination from "./pagination.core";
+import Pagination from "./pagination.hook";
 export default Pagination
