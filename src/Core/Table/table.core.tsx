@@ -8,7 +8,7 @@ export interface TableCoreProps {
   onChangePage: (val:number) => void;
   onChangePageOption: (val:number) => void;
   totalPage: number;
-  defaultPage: number;
+  defaultPage?: number;
   pageOption: number[];
 }
 

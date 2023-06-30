@@ -5,7 +5,7 @@ import Helper from "Service/Helper";
 interface PaginationHookProps {
   onChangePage: (val: number) => void;
   onChangePageOption: (val: number) => void;
-  defaultPage: number;
+  defaultPage?: number;
   totalPage: number;
   pageOption: number[];
 }

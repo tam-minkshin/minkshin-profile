@@ -20,7 +20,7 @@ const TableHook: FC<TableHookProps> = (props) => {
     totalPage = 0,
     columns,
     dataList,
-    defaultPage = 0,
+    defaultPage,
     pageOption = [10, 30, 50],
     onChangeTable,
     isAutoPagin = false,
