@@ -3,112 +3,117 @@ import TranferCore, { TranferItem } from "./tranfer.core";
 import Helper from "Service/Helper";
 type TranferList = Array<TranferItem>;
 interface TranferHookProps {
-  leftList: TranferList;
-  rightList: TranferList;
+  dataLeft: TranferList;
+  dataRight: TranferList;
   onChange: <L>(left: L, right: L) => void;
 }
 interface TranferHookState {
-  dataLeft: TranferList;
-  dataRight: TranferList;
   leftList: TranferList;
   tempLeft: TranferList;
   rightList: TranferList;
   tempRigth: TranferList;
 }
 const TranferHook: FC<TranferHookProps> = (props) => {
-  const { leftList, rightList, onChange } = props;
-  const [state, setState] = useState<TranferHookState>({ dataLeft: leftList, dataRight: rightList, leftList: leftList, rightList: rightList, tempLeft: [], tempRigth: [] });
+  const { dataLeft, dataRight, onChange } = props;
+  const [state, setState] = useState<TranferHookState>({ leftList: dataLeft, rightList: dataRight, tempLeft: [], tempRigth: [] });
   const handleSelectLeftItem = (item: TranferItem, e: ChangeEvent<HTMLInputElement>) => {
+    let { tempLeft } = state;
     if (e.target.checked) {
-      state.tempLeft.push(item);
+      tempLeft.push(item);
     } else {
-      const index = state.tempLeft.findIndex((ele) => item === ele);
-      state.tempLeft.splice(index, 1);
+      const index = tempLeft.findIndex((ele) => item === ele);
+      tempLeft.splice(index, 1);
     }
-    setState({ ...state });
+    setState((s) => ({ ...s, tempLeft }));
   };
   const handleSelectRightItem = (item: TranferItem, e: ChangeEvent<HTMLInputElement>) => {
+    let { tempRigth } = state;
     if (e.target.checked) {
-      state.tempRigth.push(item);
+      tempRigth.push(item);
     } else {
-      const index = state.tempRigth.findIndex((ele) => item === ele);
-      state.tempRigth.splice(index, 1);
+      const index = tempRigth.findIndex((ele) => item === ele);
+      tempRigth.splice(index, 1);
     }
-    setState({ ...state });
+    setState((s) => ({ ...s, tempRigth }));
   };
   const handleMoveToRight = () => {
-    state.tempLeft.forEach((item) => {
-      state.leftList.splice(
-        state.leftList.findIndex((ele) => ele === item),
+    let { tempLeft, leftList, rightList } = state;
+    tempLeft.forEach((item) => {
+      leftList.splice(
+        leftList.findIndex((ele) => ele === item),
         1
       );
-      state.rightList.push(item);
+      rightList.push(item);
     });
-    state.tempLeft = [];
-    onChange(state.leftList, state.rightList);
-    setState({ ...state });
+    tempLeft = [];
+    onChange(leftList, rightList);
+    setState((s) => ({ ...s, leftList, rightList, tempLeft }));
   };
   const handleMoveToLeft = () => {
-    state.tempRigth.forEach((item) => {
-      state.rightList.splice(
-        state.rightList.findIndex((ele) => ele === item),
+    let { tempRigth, leftList, rightList } = state;
+    tempRigth.forEach((item) => {
+      rightList.splice(
+        rightList.findIndex((ele) => ele === item),
         1
       );
-      state.leftList.push(item);
+      leftList.push(item);
     });
-    state.tempRigth = [];
-    onChange(state.leftList, state.rightList);
-    setState({ ...state });
+    tempRigth = [];
+    onChange(leftList, rightList);
+    setState((s) => ({ ...s, leftList, rightList, tempRigth }));
   };
   const handleAllToRight = () => {
-    state.rightList = [...state.rightList, ...state.leftList];
-    state.leftList = [];
-    state.tempRigth = [...state.tempRigth, ...state.tempLeft];
-    state.tempLeft = [];
-    onChange(state.leftList, state.rightList);
-    setState({ ...state });
+    let { tempRigth, tempLeft, leftList, rightList } = state;
+    rightList = [...rightList, ...leftList];
+    leftList = [];
+    tempRigth = [...tempRigth, ...tempLeft];
+    tempLeft = [];
+    onChange(leftList, rightList);
+    setState((s) => ({ ...s, leftList, rightList, tempRigth, tempLeft }));
   };
   const handleAllToLeft = () => {
-    state.leftList = [...state.leftList, ...state.rightList];
-    state.rightList = [];
-    state.tempLeft = [...state.tempLeft, ...state.tempRigth];
-    state.tempRigth = [];
-    onChange(state.rightList, state.leftList);
-    setState({ ...state });
+    let { tempRigth, tempLeft, leftList, rightList } = state;
+    leftList = [...leftList, ...rightList];
+    rightList = [];
+    tempLeft = [...tempLeft, ...tempRigth];
+    tempRigth = [];
+    onChange(leftList, rightList);
+    setState((s) => ({ ...s, leftList, rightList, tempRigth, tempLeft }));
   };
   const handleSearch = (name: string, value: string) => {
     const temp: TranferList = [];
+    let { leftList, rightList } = state;
     switch (name) {
       case "searchLeft":
         if (Helper.isEmpty(value)) {
-          state.leftList = state.dataLeft;
+          leftList = dataLeft;
           setState({ ...state });
           return;
         }
-        state.dataLeft.forEach((item) => {
+        dataLeft.forEach((item) => {
           if (item.label.toUpperCase().search(value.toUpperCase()) !== -1) {
             temp.push(item);
           }
-          return temp
+          return temp;
         });
-        state.leftList = Helper.isEmpty(temp) ? [] : temp;
+        leftList = Helper.isEmpty(temp) ? [] : temp;
         break;
       case "searchRight":
         if (Helper.isEmpty(value)) {
-          state.rightList = state.dataRight;
+          rightList = dataRight;
           setState({ ...state });
           return;
         }
-        state.dataRight.forEach((item) => {
+        dataRight.forEach((item) => {
           if (item.label.toUpperCase().search(value.toUpperCase()) !== -1) {
             temp.push(item);
           }
-          return temp
+          return temp;
         });
-        state.rightList = Helper.isEmpty(temp) ? [] : temp;
+        rightList = Helper.isEmpty(temp) ? [] : temp;
         break;
     }
-    setState({ ...state });
+    setState((s) => ({ ...s, leftList, rightList }));
   };
   return (
     <TranferCore

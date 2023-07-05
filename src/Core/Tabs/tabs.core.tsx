@@ -32,24 +32,21 @@ const TabsCore: FC<TabsCoreProps> = (props) => {
   });
   useEffect(() => {
     const index = defaultTab;
-    setState((state) => ({ ...state, defaultTab: index }));
+    let { borderItem } = state;
     if (current) {
-      setState((state) => ({
-        ...state,
-        borderItem: {
-          left: current.children[index].getBoundingClientRect().left - current.offsetLeft + (index > 0 ? 28 : 0),
-          width: current.children[index].getBoundingClientRect().width - (index > 0 ? 28 : 0),
-        },
-      }));
+      borderItem.left = current.children[index].getBoundingClientRect().left - current.offsetLeft + (index > 0 ? 28 : 0);
+      borderItem.width = current.children[index].getBoundingClientRect().width - (index > 0 ? 28 : 0);
     }
+    setState((state) => ({ ...state, defaultTab: index, borderItem }));
   }, [current, defaultTab]);
   const handleSelect = (index: number) => {
+    let { borderItem, defaultTab } = state;
     if (current) {
-      state.borderItem.left = current.children[index].getBoundingClientRect().left - current.offsetLeft + (index > 0 ? 28 : 0);
-      state.borderItem.width = current.children[index].getBoundingClientRect().width - (index > 0 ? 28 : 0);
-      state.defaultTab = index;
+      borderItem.left = current.children[index].getBoundingClientRect().left - current.offsetLeft + (index > 0 ? 28 : 0);
+      borderItem.width = current.children[index].getBoundingClientRect().width - (index > 0 ? 28 : 0);
+      defaultTab = index;
     }
-    setState({ ...state });
+    setState((s) => ({ ...s, borderItem, defaultTab }));
   };
   return (
     <div className={Style["container-tabs"]}>

@@ -45,7 +45,7 @@ const PaginationCore: FC<PaginationCoreProps> = (props) => {
           content={"<"}
           onClick={handleBackPage}
         />
-        {pagination.length <= 10 &&
+        {pagination.length <= 5 &&
           pagination.map((item) => (
             <Button
               key={item}
@@ -58,7 +58,7 @@ const PaginationCore: FC<PaginationCoreProps> = (props) => {
               onClick={() => handleSelectPage(item)}
             />
           ))}
-        {pagination.length > 10 && (
+        {pagination.length > 5 && (
           <>
             <Button
               className={

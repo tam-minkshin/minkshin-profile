@@ -148,8 +148,8 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
         </div>
         <div className={Style["section"]}>
           <TranferList
-            leftList={leftList}
-            rightList={rightList}
+            dataLeft={leftList}
+            dataRight={rightList}
             onChange={this.handleTranferList.bind(this)}
           />
         </div>

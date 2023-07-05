@@ -1,5 +1,4 @@
 import Pagination from "Core/Pagination";
-import { PaginationCoreProps } from "Core/Pagination/pagination.core";
 import { FC } from "react";
 
 export interface TableCoreProps {

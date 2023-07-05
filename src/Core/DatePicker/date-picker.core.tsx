@@ -22,15 +22,24 @@ interface DatePickerCoreStates {
 }
 const DatePickerCore = (props: DatePickerCoreProps) => {
   const { label, name, onChange, minYear = 1900, maxYear = 2100, minDate = new Date(`${minYear}/${1}/${1}`).getTime(), maxDate = new Date(`${maxYear}/${12}/${31}`).getTime(), defaultValue } = props;
-  const [state, setState] = useState<DatePickerCoreStates>({ valueInput: "", valueDate: 0, classes: `${Style["calendar-pikcer-hidden"]}` });
+  const [state, setState] = useState<DatePickerCoreStates>({
+    valueInput: "",
+    valueDate: 0,
+    classes: `${Style["calendar-pikcer-hidden"]}`,
+  });
   const inputRef = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    let { valueDate, valueInput } = state;
     if (defaultValue) {
-      setState((state) => ({ ...state, ...{ valueInput: Helper.formatDate(defaultValue), valueDate: defaultValue } }));
+      valueInput = Helper.formatDate(defaultValue);
+      valueDate = defaultValue;
+      setState((state) => ({ ...state, valueDate, valueInput }));
       return;
     }
-    setState((state) => ({ ...state, ...{ valueInput: Helper.formatDate(Date.now()), valueDate: Date.now() } }));
+    valueInput = Helper.formatDate(Date.now());
+    valueDate = Date.now();
+    setState((state) => ({ ...state, valueDate, valueInput }));
   }, [defaultValue]);
   useEffect(() => {
     window.addEventListener("click", (ev: globalThis.MouseEvent) => {
@@ -38,37 +47,49 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
       const click = ev.target as Element;
       const isCalendarClicked = ele ? ev.x < ele.right && ev.x > ele.left && ev.y < ele.bottom && ev.y > ele.top : false;
       if (!isCalendarClicked && click.className !== Style["input-datepicker"]) {
-        setState((state) => ({ ...state, ...{ classes: `${Style["calendar-pikcer-hidden"]}` } }));
+        let { classes } = state;
+        classes = `${Style["calendar-pikcer-hidden"]}`;
+        setState((s) => ({ ...s, classes }));
       }
     });
   }, []);
 
   const handleChangeDate = (res: number) => {
-    state.valueDate = res;
-    state.valueInput = Helper.formatDate(res);
-    setState({ ...state });
+    let { valueDate, valueInput } = state;
+    valueDate = res;
+    valueInput = Helper.formatDate(res);
+    setState((s) => ({ ...s, valueDate, valueInput }));
     onChange(name, res);
   };
   const handleClick = (e: MouseEvent) => {
-    console.log('check ref',inputRef)
+    let { classes } = state;
     if ((e.target as Element).className === StyleCalendar["day-allowed"] || (e.target as Element).className === `${StyleCalendar["day-allowed"]} ${StyleCalendar["day-picked"]}`) {
-      state.classes = `${Style["calendar-pikcer-hidden"]}`;
-      setState({ ...state });
+      classes = `${Style["calendar-pikcer-hidden"]}`;
+      setState((s) => ({ ...s, classes }));
       return;
     }
     if (inputRef.current && inputRef.current?.getBoundingClientRect().y > window.innerHeight / 2) {
-      state.classes = `${Style["calendar-pikcer-top"]}`;
+      classes = `${Style["calendar-pikcer-top"]}`;
     } else {
-      state.classes = `${Style["calendar-pikcer-bottom"]}`;
+      classes = `${Style["calendar-pikcer-bottom"]}`;
     }
-    setState({ ...state });
+    setState((s) => ({ ...s, classes }));
   };
   const handleInputDate = (e: ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.split("/");
-    if (value[0].length === 2 && value[1].length === 2 && Number(value[0]) <= 31 && Number(value[1]) <= 12 && Number(value[2]) && value[2].length === 4 && value.findIndex((item) => item === "") === -1) {
-      state.valueDate = Helper.parseTimestamp(`${value[0]}/${value[1]}/${value[2]}`);
-      onChange(name, state.valueDate);
-      setState({ ...state });
+    let { valueDate } = state;
+    if (
+      value[0].length === 2 &&
+      value[1].length === 2 &&
+      Number(value[0]) <= 31 &&
+      Number(value[1]) <= 12 &&
+      Number(value[2]) &&
+      value[2].length === 4 &&
+      value.findIndex((item) => item === "") === -1
+    ) {
+      valueDate = Helper.parseTimestamp(`${value[0]}/${value[1]}/${value[2]}`);
+      onChange(name, valueDate);
+      setState((s) => ({ ...s, valueDate }));
     }
   };
   return (

@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import TableCore, { TableCoreProps } from "./table.core";
+import TableCore from "./table.core";
 import Helper from "Service/Helper";
 interface TableHookProps {
   isAutoPagin?: boolean;
@@ -7,8 +7,8 @@ interface TableHookProps {
   columns: Array<{ field: string; label: string }>;
   dataList: Array<{ [name: string]: any }>;
   onChangeTable?: (val: { from: number; limit: number }) => void;
-  defaultPage?:number
-  pageOption?:number[]
+  defaultPage?: number;
+  pageOption?: number[];
 }
 interface TableHookState {
   from: number;
@@ -33,38 +33,36 @@ const TableHook: FC<TableHookProps> = (props) => {
   });
   useEffect(() => {
     if (isAutoPagin) {
-      const total =
-        dataList.length % pageOption[0] > 0
-          ? Math.floor(dataList.length / pageOption[0]) + 1
-          : dataList.length / pageOption[0];
-      pagin.paginList = Helper.deepClone(dataList).splice(
-        pagin.from,
-        pagin.limit
-      );
-      setPagin((state) => ({ ...state, ...pagin }));
-      setTotal(total);
+      let { from, limit, paginList } = pagin;
+      const totalItem =
+        dataList.length % limit > 0
+          ? Math.floor(dataList.length / limit) + 1
+          : dataList.length / limit;
+      paginList = Helper.deepClone(dataList).splice(from, limit);
+      setPagin((p) => ({ ...p, paginList }));
+      setTotal(totalItem);
     }
-  }, [dataList]);
+  }, [isAutoPagin, dataList]);
   const handleChangePage = (page: number) => {
-    const from = (page - 1) * pagin.limit;
-    pagin.from = from;
-    pagin.paginList = Helper.deepClone(dataList).splice(from, pagin.limit);
-    setPagin({ ...pagin });
+    let { from, limit, paginList } = pagin;
+    from = (page - 1) * limit;
+    paginList = Helper.deepClone(dataList).splice(from, pagin.limit);
+    setPagin((p) => ({ ...p, from, paginList }));
     onChangeTable && onChangeTable({ from: from, limit: pagin.limit });
   };
   const handleChangePageOption = (option: number) => {
     let totalPage = 0;
+    let { from, limit, paginList } = pagin;
     totalPage =
       dataList.length % option > 0
         ? Math.floor(dataList.length / option) + 1
         : dataList.length / option;
+    const currentPage = from / limit + 1;
+    from = currentPage > totalPage ? 0 : currentPage * option;
+    limit = option;
+    paginList = Helper.deepClone(dataList).splice(from, option);
     setTotal(totalPage);
-    const currentPage = pagin.from / pagin.limit;
-    const from = currentPage > totalPage ? 0 : currentPage * option;
-    pagin.from = from;
-    pagin.limit = option;
-    pagin.paginList = Helper.deepClone(dataList).splice(from, option);
-    setPagin({ ...pagin });
+    setPagin((p) => ({ ...p, from, limit, paginList }));
     onChangeTable && onChangeTable({ from: from, limit: option });
   };
   return (

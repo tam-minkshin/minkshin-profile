@@ -8,7 +8,7 @@ export enum VIEW_CALENDAR {
   DAYS,
   MONTHS,
   YEARS,
-};
+}
 interface CalendarProps {
   minYear: number;
   maxYear: number;
@@ -35,57 +35,69 @@ const Calendar: FC<CalendarProps> = (props) => {
   useEffect(() => {
     if (defaultValue) {
       const time = new Date(defaultValue);
-      setState((state) => ({
-        ...state,
-        ...{
-          currentDay: time.getDate(),
-          currentMonth: time.getMonth() + 1,
-          currentYear: time.getFullYear(),
-        },
-      }));
+      let { currentDay, currentMonth, currentYear } = state;
+      currentDay = time.getDate();
+      currentMonth = time.getMonth() + 1;
+      currentYear = time.getFullYear();
+      setState((state) => ({ ...state, currentDay, currentMonth, currentYear }));
     }
   }, [defaultValue]);
   const handleBackMonth = () => {
-    if (state.currentMonth === 1) {
-      state.currentMonth = 12;
-      state.currentYear -= 1;
-      setState({ ...state });
+    let { currentMonth, currentYear } = state;
+    if (currentMonth === 1) {
+      currentMonth = 12;
+      currentYear -= 1;
+      setState((s) => ({ ...s, currentMonth, currentYear }));
       return;
     }
-    state.currentMonth -= 1;
-    setState({ ...state });
+    currentMonth -= 1;
+    setState((s) => ({ ...s, currentMonth, currentYear }));
   };
   const handleNextMonth = () => {
-    if (state.currentMonth === 12) {
-      state.currentMonth = 1;
-      state.currentYear += 1;
-      setState({ ...state });
+    let { currentMonth, currentYear } = state;
+    if (currentMonth === 12) {
+      currentMonth = 1;
+      currentYear += 1;
+      setState((s) => ({ ...s, currentMonth, currentYear }));
       return;
     }
-    state.currentMonth += 1;
-    setState({ ...state });
+    currentMonth += 1;
+    setState((s) => ({ ...s, currentMonth, currentYear }));
   };
   const handlePickDate = (day: number) => {
-    state.currentDay = day + 1;
-    setState({ ...state });
+    let { currentDay } = state;
+    currentDay = day + 1;
+    setState((s) => ({ ...s, currentDay }));
     onPick(Helper.parseTimestamp(`${day + 1}/${currentMonth}/${currentYear}`));
   };
-  const handleChangeView = (view: number, data: number) => {
-    switch (view) {
+  const handleChangeView = (viewPick: number, data: number) => {
+    let { currentMonth, currentYear, view } = state;
+    switch (viewPick) {
       case VIEW_CALENDAR.DAYS:
-        state.currentMonth = data + 1;
+        currentMonth = data + 1;
         break;
       case VIEW_CALENDAR.MONTHS:
-        state.currentYear = data;
+        currentYear = data;
     }
-    state.view = view;
-    setState({ ...state });
+    view = viewPick;
+    setState((s) => ({ ...s, currentMonth, currentYear, view }));
   };
   return (
     <div className={Style["calendar-container"]}>
       {state.view === VIEW_CALENDAR.DAYS && (
         <div className={Style["content-animation"]}>
-          <Days currentDay={currentDay} currentYear={currentYear} currentMonth={currentMonth} minDate={minDate} maxDate={maxDate} handleBackMonth={handleBackMonth} handleNextMonth={handleNextMonth} handlePickDate={handlePickDate} handleChangeView={handleChangeView} maxYear={maxYear} />
+          <Days
+            currentDay={currentDay}
+            currentYear={currentYear}
+            currentMonth={currentMonth}
+            minDate={minDate}
+            maxDate={maxDate}
+            handleBackMonth={handleBackMonth}
+            handleNextMonth={handleNextMonth}
+            handlePickDate={handlePickDate}
+            handleChangeView={handleChangeView}
+            maxYear={maxYear}
+          />
         </div>
       )}
       {state.view === VIEW_CALENDAR.MONTHS && (
