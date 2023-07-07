@@ -9,6 +9,7 @@ import Tabs from "Core/Tabs";
 import { ConfigTab } from "Core/Tabs/tabs.core";
 import Image from "Core/Image";
 import Table from "Core/Table";
+import List from "Componnets/List";
 
 interface ProfileProps {}
 type TranferItem = Array<{ label: string; value: string }>;
@@ -20,7 +21,6 @@ export interface ProfileState {
   rightList: TranferItem;
   isShow: boolean;
   configTab: ConfigTab;
-  column:Array<{field:string,label:string}>
   dataList:Array<{[name:string]:any}>
 }
 
@@ -34,11 +34,6 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
     ],
     isShow: false,
     configTab: [],
-    column:[
-      { field: "name", label: "Họ tên" },
-      { field: "dob", label: "Ngày sinh" },
-      { field: "email", label: "Email" },
-    ],
     dataList:[]
   };
 
@@ -47,20 +42,7 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
     for (let i = 0; configTab.length < 3; i++) {
       configTab.push({ id: i, label: `Tab ${i}`, content: <>{i}</> });
     }
-    const url =
-      "https://649e88de245f077f3e9c7e10.mockapi.io/TableListExample";
-    const options = {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    };
-    const logJSONData = async () => {
-      const res = await fetch(url, options);
-      dataList = await res.json();
-      this.setState({dataList})
-    };
-    logJSONData();
+    
     this.setState({ configTab });
   }
   handleData(dataProp: { [name: string]: string | number }) {
@@ -106,7 +88,7 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
   }
 
   render() {
-    const { data, isShow, leftList, rightList, column, dataList } = this.state;
+    const { data, isShow, leftList, rightList, dataList } = this.state;
     return (
       <>
         <div className={Style["section"]}>
@@ -160,7 +142,7 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
           <Image linkImg="https://picsum.photos/200/300?random=1" />
         </div>
         <div className={Style["section"]}>
-          <Table columns={column} dataList={dataList} isAutoPagin />
+          <List data={'test'}/>
         </div>
       </>
     );
