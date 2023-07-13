@@ -8,7 +8,7 @@ export default function HOCRequest<T>(Component: React.ComponentType<T>) {
     const [state, setState] = useState<any>(props);
     useEffect(() => {
       if (res) {
-        setState((s: any) => ({ ...s, ...res }));
+        setState((s: any) => ({ ...s, ...res.response }));
       }
     }, [res]);
     return <Component {...state} />;

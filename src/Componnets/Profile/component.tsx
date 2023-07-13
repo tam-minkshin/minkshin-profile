@@ -10,7 +10,7 @@ import { ConfigTab } from "Core/Tabs/tabs.core";
 import Image from "Core/Image";
 import Table from "Core/Table";
 import List from "Componnets/List";
-
+import VectorAuthPage from "Core/MatrixChat";
 interface ProfileProps {}
 type TranferItem = Array<{ label: string; value: string }>;
 export interface ProfileState {
@@ -144,9 +144,13 @@ class ProfileComponent extends React.Component<ProfileProps, ProfileState> {
         <div className={Style["section"]}>
           <List data={'test'}/>
         </div>
+        <div className={Style["section"]}>
+          <VectorAuthPage/>
+        </div>
       </>
     );
   }
 }
 
 export default ProfileComponent;
+
