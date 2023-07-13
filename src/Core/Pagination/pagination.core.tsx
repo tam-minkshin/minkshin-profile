@@ -1,7 +1,7 @@
 import Button from "Core/Button";
 import Helper from "Service/Helper";
 import { ChangeEvent, ChangeEventHandler, FC, useEffect, useState } from "react";
-import Style from "Sass/Core/_pagination.module.scss";
+import Style from "../../Sass/Core/_pagination.module.scss";
 
 export interface PaginationCoreProps {
   pagination:number[]

@@ -1,7 +1,7 @@
 import * as React from "react";
 import FormComponent from "Componnets/Form/component";
 import Helper from "Service/Helper";
-import Style from "Sass/Component/_profile.module.scss";
+import Style from "../../Sass/Component/_profile.module.scss";
 import Dialog from "Core/Dialog";
 import UpdateProfileComponent from "Componnets/UpdateForm";
 import TranferList from "Core/TranferList";

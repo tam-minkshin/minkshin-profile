@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Style from "Sass/Core/_image.module.scss";
+import Style from "../../Sass/Core/_image.module.scss";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faExpand, faRightLeft, faRotateLeft, faRotateRight, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { styled } from "styled-components";

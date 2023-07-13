@@ -1,7 +1,7 @@
 import Button from "Core/Button";
 import Grid from "Core/Grid";
 import { FC } from "react";
-import Style from "Sass/Core/_calendar.module.scss";
+import Style from "../../Sass/Core/_calendar.module.scss";
 import { CalendarType, VIEW_CALENDAR } from "./Calendar";
 import Helper from "Service/Helper";
 import mergeClass from "Core/MergeClass";

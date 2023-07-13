@@ -1,6 +1,6 @@
 import * as React from "react";
 import Input from "Core/Input";
-import Style from "Sass/Component/_form.module.scss";
+import Style from "../../Sass/Component/_form.module.scss";
 import Button from "Core/Button";
 import Grid from "Core/Grid";
 import DatePicker from "Core/DatePicker";

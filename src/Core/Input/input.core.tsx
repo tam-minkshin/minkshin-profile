@@ -1,5 +1,5 @@
 import { ChangeEventHandler } from "react";
-import Style from "Sass/Core/_input.module.scss";
+import Style from "../../Sass/Core/_input.module.scss";
 import Helper from "Service/Helper";
 import { InputHookProps } from "./input.hook";
 import mergeClass from "Core/MergeClass";

@@ -1,6 +1,6 @@
 import Button from "Core/Button";
 import { FC, useEffect, useState } from "react";
-import Style from "Sass/Core/_dialog.module.scss";
+import Style from "../../Sass/Core/_dialog.module.scss";
 interface DialogProps {
   content: JSX.Element;
   isShowDialog: boolean;

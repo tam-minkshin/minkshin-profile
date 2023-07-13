@@ -1,6 +1,6 @@
 import mergeClass from "Core/MergeClass";
 import React, { FormEvent, ReactNode } from "react";
-import Style from "Sass/Core/_button.module.scss";
+import Style from "../../Sass/Core/_button.module.scss";
 
 interface Buttonprops {
   content: ReactNode;

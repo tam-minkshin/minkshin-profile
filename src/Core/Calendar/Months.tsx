@@ -2,7 +2,7 @@ import Grid from "Core/Grid";
 import Helper from "Service/Helper";
 import { FC } from "react";
 import { VIEW_CALENDAR } from "./Calendar";
-import Style from "Sass/Core/_calendar.module.scss";
+import Style from "../../Sass/Core/_calendar.module.scss";
 
 interface MonthsProps {
   currentYear: number;

@@ -1,6 +1,6 @@
 import Input from "Core/Input";
 import { ChangeEvent, FC } from "react";
-import Style from "Sass/Core/_checkbox.module.scss";
+import Style from "../../Sass/Core/_checkbox.module.scss";
 export type TranferItem = { label: string; value: string };
 type HandleSelect = (item: TranferItem, e: ChangeEvent<HTMLInputElement>) => void;
 export interface TranferListProps {

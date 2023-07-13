@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import Style from "Sass/Core/_calendar.module.scss";
+import Style from "../../Sass/Core/_calendar.module.scss";
 import Days from "./Days";
 import Months from "./Months";
 import Years from "./Years";

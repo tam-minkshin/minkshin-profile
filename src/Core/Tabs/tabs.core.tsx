@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
-import Style from "Sass/Core/_tabs.module.scss";
+import Style from "../../Sass/Core/_tabs.module.scss";
 type ItemTab = { id: number; label: string; content: ReactNode };
 export type ConfigTab = Array<ItemTab>;
 interface TabsCoreProps {
