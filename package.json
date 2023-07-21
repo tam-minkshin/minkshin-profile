@@ -20,9 +20,6 @@
     "@types/react-dom": "^18.2.4",
     "axios": "^1.4.0",
     "babel-plugin-macros": "^3.1.0",
-    "lodash": "^4.17.21",
-    "matrix-js-sdk": "^26.2.0",
-    "matrix-react-sdk": "^3.75.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
@@ -58,6 +55,8 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
+    "matrix-mock-request": "^2.5.0",
+    "matrix-web-i18n": "^1.4.0",
     "postcss": "^8.4.24",
     "sass": "^1.62.1",
     "sass-loader": "^13.3.1",

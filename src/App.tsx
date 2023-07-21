@@ -5,7 +5,7 @@ import MainComponent from "Componnets";
 
 function App() {
   return (
-    <div className={Style["App"]}>
+    <div className={Style.App}>
       <BrowserRouter>
         <MainComponent />
       </BrowserRouter>

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Style from "../../Sass/Core/_calendar.module.scss";
 import Days from "./Days";
 import Months from "./Months";
@@ -82,9 +82,13 @@ const Calendar: FC<CalendarProps> = (props) => {
     view = viewPick;
     setState((s) => ({ ...s, currentMonth, currentYear, view }));
   };
+  const refCal = useRef<HTMLDivElement>(null)
+  useEffect(() =>{
+    console.log('check refCal',refCal)
+  },[])
   return (
-    <div className={Style["calendar-container"]}>
-      {state.view === VIEW_CALENDAR.DAYS && (
+    <div ref={refCal} className={Style["calendar-container"]}>
+      {/* {state.view === VIEW_CALENDAR.DAYS && (
         <div className={Style["content-animation"]}>
           <Days
             currentDay={currentDay}
@@ -101,15 +105,15 @@ const Calendar: FC<CalendarProps> = (props) => {
         </div>
       )}
       {state.view === VIEW_CALENDAR.MONTHS && (
-        <div className={Style["content-animation"]}>
+        <div className={Style[""]}>
           <Months currentYear={currentYear} currentMonth={currentMonth} minDate={minDate} maxDate={maxDate} handleChangeView={handleChangeView} />
         </div>
       )}
       {state.view === VIEW_CALENDAR.YEARS && (
-        <div className={Style["content-animation"]}>
+        <div className={Style[""]}>
           <Years currentYear={currentYear} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} handleChangeView={handleChangeView} />
         </div>
-      )}
+      )} */}
     </div>
   );
 };

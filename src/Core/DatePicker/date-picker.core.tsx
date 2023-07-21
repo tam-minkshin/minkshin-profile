@@ -42,15 +42,20 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
     setState((state) => ({ ...state, valueDate, valueInput }));
   }, [defaultValue]);
   useEffect(() => {
+    let classCal: string;
     window.addEventListener("click", (ev: globalThis.MouseEvent) => {
-      const ele = calendarRef.current?.getBoundingClientRect();
-      const click = ev.target as Element;
-      const isCalendarClicked = ele ? ev.x < ele.right && ev.x > ele.left && ev.y < ele.bottom && ev.y > ele.top : false;
-      if (!isCalendarClicked && click.className !== Style["input-datepicker"]) {
-        let { classes } = state;
-        classes = `${Style["calendar-pikcer-hidden"]}`;
-        setState((s) => ({ ...s, classes }));
+      console.log("Cal", calendarRef);
+      const click = ev.target as Node;
+      if (!inputRef.current?.contains(click) && !calendarRef.current?.contains(click)) {
+        classCal = `${Style["calendar-pikcer-hidden"]}`;
+      } else if (inputRef.current?.contains(click) || calendarRef.current?.contains(click)) {
+        if (inputRef.current && inputRef.current?.getBoundingClientRect().y > window.innerHeight / 2) {
+          classCal = `${Style["calendar-pikcer-top"]}`;
+        } else {
+          classCal = `${Style["calendar-pikcer-bottom"]}`;
+        }
       }
+      setState((s) => ({ ...s, classes: classCal }));
     });
   }, []);
 
@@ -62,18 +67,18 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
     onChange(name, res);
   };
   const handleClick = (e: MouseEvent) => {
-    let { classes } = state;
-    if ((e.target as Element).className === StyleCalendar["day-allowed"] || (e.target as Element).className === `${StyleCalendar["day-allowed"]} ${StyleCalendar["day-picked"]}`) {
-      classes = `${Style["calendar-pikcer-hidden"]}`;
-      setState((s) => ({ ...s, classes }));
-      return;
-    }
-    if (inputRef.current && inputRef.current?.getBoundingClientRect().y > window.innerHeight / 2) {
-      classes = `${Style["calendar-pikcer-top"]}`;
-    } else {
-      classes = `${Style["calendar-pikcer-bottom"]}`;
-    }
-    setState((s) => ({ ...s, classes }));
+    // let { classes } = state;
+    // if ((e.target as Element).className === StyleCalendar["day-allowed"] || (e.target as Element).className === `${StyleCalendar["day-allowed"]} ${StyleCalendar["day-picked"]}`) {
+    //   classes = `${Style["calendar-pikcer-hidden"]}`;
+    //   setState((s) => ({ ...s, classes }));
+    //   return;
+    // }
+    // if (inputRef.current && inputRef.current?.getBoundingClientRect().y > window.innerHeight / 2) {
+    //   classes = `${Style["calendar-pikcer-top"]}`;
+    // } else {
+    //   classes = `${Style["calendar-pikcer-bottom"]}`;
+    // }
+    // setState((s) => ({ ...s, classes }));
   };
   const handleInputDate = (e: ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.split("/");
