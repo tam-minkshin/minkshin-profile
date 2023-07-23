@@ -25,8 +25,10 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
   const [state, setState] = useState<DatePickerCoreStates>({
     valueInput: "",
     valueDate: 0,
-    classes: `${Style["calendar-pikcer-hidden"]}`,
+    classes: `${Style["calendar-pikcer-bottom"]}`,
   });
+  const [isOpen, setOpen] = useState<boolean>(false);
+
   const inputRef = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -42,23 +44,19 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
     setState((state) => ({ ...state, valueDate, valueInput }));
   }, [defaultValue]);
   useEffect(() => {
-    let classCal: string;
-    window.addEventListener("click", (ev: globalThis.MouseEvent) => {
-      console.log("Cal", calendarRef);
+    const detectClick = (ev: globalThis.MouseEvent) => {
       const click = ev.target as Node;
-      if (!inputRef.current?.contains(click) && !calendarRef.current?.contains(click)) {
-        classCal = `${Style["calendar-pikcer-hidden"]}`;
-      } else if (inputRef.current?.contains(click) || calendarRef.current?.contains(click)) {
-        if (inputRef.current && inputRef.current?.getBoundingClientRect().y > window.innerHeight / 2) {
-          classCal = `${Style["calendar-pikcer-top"]}`;
-        } else {
-          classCal = `${Style["calendar-pikcer-bottom"]}`;
-        }
+      if (!inputRef.current?.contains(click)) {
+        setOpen(false);
+        return;
       }
-      setState((s) => ({ ...s, classes: classCal }));
-    });
+      setOpen(true);
+    };
+    window.addEventListener("click", detectClick);
+    return () => {
+      window.removeEventListener("click", detectClick);
+    };
   }, []);
-
   const handleChangeDate = (res: number) => {
     let { valueDate, valueInput } = state;
     valueDate = res;
@@ -105,7 +103,7 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
         <div className={Style["calendar-icon"]}>
           <FontAwesomeIcon icon={icon({ name: "calendar", style: "regular" })} />
         </div>
-        <div ref={calendarRef} className={state.classes}>
+        <div ref={calendarRef} className={state.classes} style={{display:isOpen ? "unset" : "none"}}>
           <Calendar defaultValue={state.valueDate} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />
         </div>
       </div>

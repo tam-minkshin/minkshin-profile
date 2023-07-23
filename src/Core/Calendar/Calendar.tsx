@@ -82,38 +82,30 @@ const Calendar: FC<CalendarProps> = (props) => {
     view = viewPick;
     setState((s) => ({ ...s, currentMonth, currentYear, view }));
   };
-  const refCal = useRef<HTMLDivElement>(null)
-  useEffect(() =>{
-    console.log('check refCal',refCal)
-  },[])
+  const calendarRef = useRef<HTMLDivElement>(null);
+
   return (
-    <div ref={refCal} className={Style["calendar-container"]}>
-      {/* {state.view === VIEW_CALENDAR.DAYS && (
-        <div className={Style["content-animation"]}>
-          <Days
-            currentDay={currentDay}
-            currentYear={currentYear}
-            currentMonth={currentMonth}
-            minDate={minDate}
-            maxDate={maxDate}
-            handleBackMonth={handleBackMonth}
-            handleNextMonth={handleNextMonth}
-            handlePickDate={handlePickDate}
-            handleChangeView={handleChangeView}
-            maxYear={maxYear}
-          />
-        </div>
-      )}
-      {state.view === VIEW_CALENDAR.MONTHS && (
-        <div className={Style[""]}>
-          <Months currentYear={currentYear} currentMonth={currentMonth} minDate={minDate} maxDate={maxDate} handleChangeView={handleChangeView} />
-        </div>
-      )}
-      {state.view === VIEW_CALENDAR.YEARS && (
-        <div className={Style[""]}>
-          <Years currentYear={currentYear} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} handleChangeView={handleChangeView} />
-        </div>
-      )} */}
+    <div ref={calendarRef} className={Style["calendar-container"]}>
+      <div style={{ display: state.view === VIEW_CALENDAR.DAYS ? "unset" : "none" }}>
+        <Days
+          currentDay={currentDay}
+          currentYear={currentYear}
+          currentMonth={currentMonth}
+          minDate={minDate}
+          maxDate={maxDate}
+          handleBackMonth={handleBackMonth}
+          handleNextMonth={handleNextMonth}
+          handlePickDate={handlePickDate}
+          handleChangeView={handleChangeView}
+          maxYear={maxYear}
+        />
+      </div>
+      <div style={{ display: state.view === VIEW_CALENDAR.MONTHS ? "unset" : "none" }}>
+        <Months currentYear={currentYear} currentMonth={currentMonth} minDate={minDate} maxDate={maxDate} handleChangeView={handleChangeView} />
+      </div>
+      <div style={{ display: state.view === VIEW_CALENDAR.YEARS ? "unset" : "none" }}>
+        <Years currentYear={currentYear} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} handleChangeView={handleChangeView} />
+      </div>
     </div>
   );
 };
