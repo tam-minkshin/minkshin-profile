@@ -46,7 +46,9 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
   useEffect(() => {
     const detectClick = (ev: globalThis.MouseEvent) => {
       const click = ev.target as Node;
-      if (!inputRef.current?.contains(click)) {
+      const isDayClicked = (ev.target as HTMLTableElement).className.indexOf(`${StyleCalendar["day-allowed"]}`) !== -1 ? true : false;
+      handlePositionCal();
+      if (!inputRef.current?.contains(click) || isDayClicked) {
         setOpen(false);
         return;
       }
@@ -57,26 +59,29 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
       window.removeEventListener("click", detectClick);
     };
   }, []);
+  useEffect(() => {
+    window.addEventListener("scroll", handlePositionCal);
+    return () => {
+      window.removeEventListener("scroll", handlePositionCal);
+    };
+  }, []);
+  const handlePositionCal = () => {
+    const inputHeight = inputRef.current?.getBoundingClientRect().y ?? 0;
+    const calHeight = calendarRef.current?.getBoundingClientRect().height === 0 ? 363 : calendarRef.current?.getBoundingClientRect().height ?? 363;
+    let { classes } = state;
+    if (inputHeight < calHeight) {
+      classes = `${Style["calendar-pikcer-bottom"]}`;
+    } else if (inputHeight > window.innerHeight - calHeight) {
+      classes = `${Style["calendar-pikcer-top"]}`;
+    }
+    setState((state) => ({ ...state, classes }));
+  };
   const handleChangeDate = (res: number) => {
     let { valueDate, valueInput } = state;
     valueDate = res;
     valueInput = Helper.formatDate(res);
     setState((s) => ({ ...s, valueDate, valueInput }));
     onChange(name, res);
-  };
-  const handleClick = (e: MouseEvent) => {
-    // let { classes } = state;
-    // if ((e.target as Element).className === StyleCalendar["day-allowed"] || (e.target as Element).className === `${StyleCalendar["day-allowed"]} ${StyleCalendar["day-picked"]}`) {
-    //   classes = `${Style["calendar-pikcer-hidden"]}`;
-    //   setState((s) => ({ ...s, classes }));
-    //   return;
-    // }
-    // if (inputRef.current && inputRef.current?.getBoundingClientRect().y > window.innerHeight / 2) {
-    //   classes = `${Style["calendar-pikcer-top"]}`;
-    // } else {
-    //   classes = `${Style["calendar-pikcer-bottom"]}`;
-    // }
-    // setState((s) => ({ ...s, classes }));
   };
   const handleInputDate = (e: ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.split("/");
@@ -95,15 +100,13 @@ const DatePickerCore = (props: DatePickerCoreProps) => {
       setState((s) => ({ ...s, valueDate }));
     }
   };
+
   return (
     <div className={Style["date-picker-ctn"]}>
-      <div ref={inputRef} className={Style["input-picker"]} onClick={handleClick}>
+      <div ref={inputRef} className={Style["input-picker"]}>
         <label className={Style["label"]}>{label}</label>
         <input key={state.valueInput} placeholder="DD/MM/YYYY" className={Style["input-datepicker"]} type="text" defaultValue={state.valueInput} name={name} onChange={handleInputDate} />
-        <div className={Style["calendar-icon"]}>
-          <FontAwesomeIcon icon={icon({ name: "calendar", style: "regular" })} />
-        </div>
-        <div ref={calendarRef} className={state.classes} style={{display:isOpen ? "unset" : "none"}}>
+        <div ref={calendarRef} className={state.classes} style={{ display: isOpen ? "unset" : "none" }}>
           <Calendar defaultValue={state.valueDate} minYear={minYear} maxYear={maxYear} minDate={minDate} maxDate={maxDate} onPick={handleChangeDate} />
         </div>
       </div>

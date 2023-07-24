@@ -35,7 +35,6 @@ class UpdateFormComponent extends React.Component<FormProps, FormState> {
     this.props.handleConfirm(this.state.data);
   }
   render() {
-    console.log('new Date(this.props.defaultData.dob).getTime()',this.props.defaultData.dob)
     return (
       <div>
         <form action="submit">
